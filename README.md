@@ -12,9 +12,7 @@ versions.
 
 ## About
 
-Iron Router is a *routing* package for Meteor. It makes single page apps.
-
-IR takes control of your `<body>` tag, rendering templates based on the user's current URL. It also helps you set up subscriptions per-route and much more.
+Iron Router i18n adds support for i18n routes to Iron Router package for Meteor.
 
 Iron Router works with Iron Router 0.7.0 and above.
 
