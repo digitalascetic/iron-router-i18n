@@ -1,6 +1,6 @@
 # Iron Router i18n 
 
-Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/iron-router) package..
+Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/iron-router) package.
 
 
 ## History
@@ -14,7 +14,7 @@ versions.
 
 Iron Router i18n adds support for i18n routes to Iron Router package for Meteor.
 
-Features:
+### Features:
 
 * i18n system agnostic. It can be easily integrated with any existing i18n package (or at least it aims to).
 Currently used with [TAPi18n](http://atmospherejs.com/package/tap-i18n) on an internal project.
@@ -28,13 +28,13 @@ redirect and path rewrite but each of these is overridable on Router configurati
 e.g. one can support different behaviour on missing lang code (e.g. not redirect but directly serve default language) 
 or use different language aware url schema e.g. `http://example.com/test.it` instead of `http://example.com/it/test`.
 
-Missing features (TODO):
+### Missing features (TODO):
 
 * Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Provide/review server side behaviour (most of the code is client and server but missing server HTTP part).
 
-
 Iron Router i18n works with Iron Router 0.7.0 and above.
+
 
 ##  Installation
 
@@ -49,7 +49,9 @@ $ mrt add iron-router-i18n
 ### Basic configuration
 
 Basic configuration for the moment requires that at least `getLanguage`/`setLanguage` methods be defined on
-Router i18n configuration. This two methods are thought as the "bridge" between the i18n system and iron-router-i18n.
+Router i18n configuration options. This two methods are thought as the "bridge" between the i18n system (not provided
+by iron-router-i18n) and iron-router-i18n itself.
+
 Here below a very basic example using TAPi18n (all iron-router-i18n configuration options are within the i18n option
 namespace):
 
@@ -82,7 +84,7 @@ Router.configure({
 
 #### languages
 
-Array that can specify the supported languages.
+Array that can specify the supported languages, use it to identify url fragments that can be considered language codes.
 
 E.g.
 
@@ -126,17 +128,20 @@ Router.configure({
 
 #### missingLangCodeAction(path, options)
 
-Action to be taken when no language code can be found in path (default is trying to redirect to a language aware path).
+Action to be taken when no language code can be found in path (default is trying to redirect to a language aware path
+based on the current configured language).
 
 
 #### langCodeAction(path, options)
 
 Action to be taken when a language code is found. Default is using ``options.i18n.setLanguage`` to set the language.
 
+
 #### rewritePath(path, options)
 
 Called after ``langCodeAction`` it gives the option to rewrite the path before dispatching it through Iron Router.
 Default strategy is to strip language code so that the path can match language agnostic routes.
+
 
 #### setLangCode(lang)
 
