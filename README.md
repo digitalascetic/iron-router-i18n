@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.1
+**Latest Version:** 0.1.0
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -20,7 +20,7 @@ Iron Router i18n adds support for i18n routes to Iron Router package for Meteor.
 Currently used with [TAPi18n](http://atmospherejs.com/package/tap-i18n) on an internal project.
 * Switch language when a route is called with a language code in it. E.g.: `http://example.com/it/test` 
 will change the language to italian and map to ``http://example.com/test`` while `http://example.com/en/test` will 
-change the language to english but still map to `http://localhost:3000/test`. 
+change the language to english but still map to `http://example.com:3000/test`. 
 * Redirect/switch to a language-aware route when the language code is missing from the url. E.g. it can automatically 
 switch from `http://example.com/test` to `http://example.com/en/test` if current language is english.
 * Configurable: default strategies provide all above mentioned features: lang code extraction, language switching, 
@@ -33,7 +33,9 @@ or use different language aware url schema e.g. `http://example.com/test.it` ins
 * Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Provide/review server side behaviour (most of the code is client and server but missing server HTTP part).
 * Provide reactive `pathFor` helper changing url resolution on language change.
+* Improve reactivity (e.g. make url change automatically on language change etc.)
 * Provide custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
+
 
 Iron Router i18n works with Iron Router 0.7.0 and above.
 
