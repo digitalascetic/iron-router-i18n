@@ -28,10 +28,12 @@ redirect and path rewrite but each of these is overridable on Router configurati
 e.g. one can support different behaviour on missing lang code (e.g. not redirect but directly serve default language) 
 or use different language aware url schema e.g. `http://example.com/test.it` instead of `http://example.com/it/test`.
 
-### Missing features (TODO):
+### TODO:
 
 * Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Provide/review server side behaviour (most of the code is client and server but missing server HTTP part).
+* Provide reactive `pathFor` helper changing url resolution on language change.
+* Provide custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
 
 Iron Router i18n works with Iron Router 0.7.0 and above.
 
