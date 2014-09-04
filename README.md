@@ -20,7 +20,7 @@ Iron Router i18n adds support for i18n routes to Iron Router package for Meteor.
 Currently used with [TAPi18n](http://atmospherejs.com/package/tap-i18n) on an internal project.
 * Switch language when a route is called with a language code in it. E.g.: `http://example.com/it/test` 
 will change the language to italian and map to ``http://example.com/test`` while `http://example.com/en/test` will 
-change the language to english but still map to `http://example.com:3000/test`. 
+change the language to english but still map to `http://example.com/test`. 
 * Redirect/switch to a language-aware route when the language code is missing from the url. E.g. it can automatically 
 switch from `http://example.com/test` to `http://example.com/en/test` if current language is english.
 * Configurable: default strategies provide all above mentioned features: lang code extraction, language switching, 
