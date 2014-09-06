@@ -14,6 +14,8 @@ Package.on_use(function (api) {
     api.use('ui', 'client');
 
     api.add_files('lib/router.js', ['client', 'server']);
+    api.add_files('lib/route.js', ['client', 'server']);
+    api.add_files('lib/client/ui/helpers.js', ['client']);
 
     api.export('Router', ['client', 'server']);
 
@@ -22,7 +24,7 @@ Package.on_use(function (api) {
 Package.on_test(function (api) {
 
     api.use('iron:router', ['client', 'server']);
-    api.use('iron-router-i18n', ['client', 'server']);
+    api.use('martino:iron-router-i18n', ['client', 'server']);
     api.use('tinytest', ['client', 'server']);
     api.use('test-helpers', ['client', 'server']);
     api.use('reactive-dict', ['client', 'server']);
