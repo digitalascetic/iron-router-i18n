@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.1.0
+**Latest Version:** 0.2.0
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -27,13 +27,13 @@ switch from `http://example.com/test` to `http://example.com/en/test` if current
 redirect and path rewrite but each of these is overridable on Router configuration by a custom strategy so that 
 e.g. one can support different behaviour on missing lang code (e.g. not redirect but directly serve default language) 
 or use different language aware url schema e.g. `http://example.com/test.it` instead of `http://example.com/it/test`.
+* Provides reactive `pathFor` `urlFor` helpers that change reactively on router language change.
+
 
 ### TODO:
 
 * Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Provide/review server side behaviour (most of the code is client and server but missing server HTTP part).
-* Provide reactive `pathFor` helper changing url resolution on language change.
-* Improve reactivity (e.g. make url change automatically on language change etc.)
 * Provide custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
 
 
@@ -42,10 +42,10 @@ Iron Router i18n works with Iron Router 0.7.0 and above.
 
 ##  Installation
 
-Iron Router i18n can be installed with [Meteorite](https://github.com/oortcloud/meteorite/). From inside a Meteorite-managed app:
+Iron Router i18n can be installed with the meteor package system:
 
 ``` sh
-$ mrt add iron-router-i18n
+$ meteor add martino:iron-router-i18n
 ```
 
 ## Docs
@@ -157,11 +157,30 @@ method.
 
 ### Methods
 
-#### Router.setLangCode(lang)
+#### Router.setLanguage(lang)
 
-Programmatically switches the url to a different language code one. This can be used e.g. with a language selector
-when switching from a language to another one switching the url accordingly.
+Programmatically changes the router language.
 
+
+#### Router.getLanguage()
+
+Gets the current language the router is using for i18n.
+
+### Helpers
+
+#### pathFor
+Overrides iron:router pathFor helper making it reactive on router language change and adds the "lang" parameter 
+to force language for path. 
+
+E.g.
+
+`{{pathFor route='items' lang="it"}}`
+
+will always show route `'items'` for language `it`.
+
+#### urlFor
+
+The same as `pathFor` for gives absolute URL.
 
 ## License
 
