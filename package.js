@@ -1,6 +1,5 @@
 Package.describe({
     summary: 'Iron router support for i18n routing prefix',
-    version: "0.1.1",
     git: "https://github.com/yoolab/iron-router-i18n.git",
     version: '0.1.2'
 });
@@ -12,10 +11,15 @@ Package.on_use(function (api) {
     api.use('reactive-dict', ['client', 'server']);
     api.use('deps', ['client', 'server']);
     api.use('underscore', ['client', 'server']);
+
     api.use("iron:router@0.9.1", ['client', 'server']);
 
+    // for helpers
+    api.use('ui', 'client');
 
     api.add_files('lib/router.js', ['client', 'server']);
+    api.add_files('lib/route.js', ['client', 'server']);
+    api.add_files('lib/client/ui/helpers.js', ['client']);
 
     api.export('Router', ['client', 'server']);
 
@@ -29,5 +33,7 @@ Package.on_test(function (api) {
     api.use('test-helpers', ['client', 'server']);
     api.use('reactive-dict', ['client', 'server']);
 
+    api.add_files('test/init.js', ['client', 'server']);
+    api.add_files('test/router.js', ['client', 'server']);
 
 });
