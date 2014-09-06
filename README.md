@@ -37,7 +37,7 @@ or use different language aware url schema e.g. `http://example.com/test.it` ins
 * Provide custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
 
 
-Iron Router i18n works with Iron Router 0.7.0 and above.
+Iron Router i18n works with Iron Router 0.9.1 and above.
 
 
 ##  Installation
