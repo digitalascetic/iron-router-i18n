@@ -1,5 +1,10 @@
 ## v0.2.1
 
+* Fixed bug: in `pathFor` and `urlFor` that were not working when using parametrized paths.
+
+
+## v0.2.1
+
 * Fixed bug: `pathFor` and `urlFor` not working when language was not set
 * Fixed bug: using Router.go with named routes did not work.
 * Fixed bug: changing language after a Router.go setting wrong location on browser
