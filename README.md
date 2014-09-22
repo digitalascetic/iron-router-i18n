@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.2.2
+**Latest Version:** 0.2.3
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -88,7 +88,7 @@ Router.configure({
 
 #### languages
 
-Array that can specify the supported languages, use it to identify url fragments that can be considered language codes.
+**REQUIRED**: Array that specify the supported languages, use it to identify url fragments that can be considered language codes.
 
 E.g.
 

@@ -1,6 +1,12 @@
-## v0.2.1
+## v0.2.3
 
-* Fixed bug: in `pathFor` and `urlFor` that were not working when using parametrized paths.
+* **BREAKING CHANGE**: `i18n.languages` options is now compulsory
+* Fixed bug: `urlFor` was not working when using parametrized paths (again)
+* Fixed bug: url rewriting wa not working properly for routes expressed as path in some cases.
+
+## v0.2.2
+
+* Fixed bug: `pathFor` and `urlFor` were not working when using parametrized paths.
 
 
 ## v0.2.1

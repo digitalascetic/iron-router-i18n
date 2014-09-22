@@ -2,11 +2,7 @@
   "dependencies": [
     [
       "application-configuration",
-      "1.0.2"
-    ],
-    [
-      "base64",
-      "1.0.0"
+      "1.0.1"
     ],
     [
       "binary-heap",
@@ -18,10 +14,6 @@
     ],
     [
       "blaze-tools",
-      "1.0.0"
-    ],
-    [
-      "boilerplate-generator",
       "1.0.0"
     ],
     [
@@ -38,11 +30,11 @@
     ],
     [
       "deps",
-      "1.0.3"
+      "1.0.2"
     ],
     [
       "ejson",
-      "1.0.2"
+      "1.0.1"
     ],
     [
       "follower-livedata",
@@ -58,7 +50,7 @@
     ],
     [
       "htmljs",
-      "1.0.1"
+      "1.0.0"
     ],
     [
       "id-map",
@@ -90,23 +82,23 @@
     ],
     [
       "logging",
-      "1.0.3"
+      "1.0.2"
     ],
     [
       "meteor",
-      "1.1.0"
-    ],
-    [
-      "minifiers",
-      "1.1.0"
-    ],
-    [
-      "minimongo",
       "1.0.3"
     ],
     [
+      "minifiers",
+      "1.0.2"
+    ],
+    [
+      "minimongo",
+      "1.0.2"
+    ],
+    [
       "mongo",
-      "1.0.5"
+      "1.0.4"
     ],
     [
       "observe-sequence",
@@ -122,7 +114,7 @@
     ],
     [
       "reactive-dict",
-      "1.0.2"
+      "1.0.1"
     ],
     [
       "reactive-var",
@@ -134,7 +126,7 @@
     ],
     [
       "routepolicy",
-      "1.0.1"
+      "1.0.0"
     ],
     [
       "spacebars",
@@ -146,7 +138,7 @@
     ],
     [
       "templating",
-      "1.0.6"
+      "1.0.5"
     ],
     [
       "tracker",
@@ -154,7 +146,7 @@
     ],
     [
       "ui",
-      "1.0.2"
+      "1.0.1"
     ],
     [
       "underscore",
@@ -162,14 +154,10 @@
     ],
     [
       "webapp",
-      "1.1.1"
-    ],
-    [
-      "webapp-hashing",
-      "1.0.0"
+      "1.0.3"
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.31",
+  "toolVersion": "meteor-tool@1.0.27",
   "format": "1.0"
 }
