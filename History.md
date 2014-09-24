@@ -1,6 +1,10 @@
+## v0.2.4
+
+* Fixed bug #6, Router.go hash options not working.
+
 ## v0.2.3
 
-* **BREAKING CHANGE**: `i18n.languages` options is now compulsory
+* **BREAKING CHANGE**: `i18n.languages` option is now compulsory
 * Fixed bug: `urlFor` was not working when using parametrized paths (again)
 * Fixed bug: url rewriting wa not working properly for routes expressed as path in some cases.
 
@@ -17,7 +21,7 @@
 
 ## v0.2.0
 
-* Overriden reactive language dependent versions of iron:router `pathFor` and `urlFor` helpers.
+* Overridden reactive language dependent versions of iron:router `pathFor` and `urlFor` helpers.
 * Basic tests for router dispatch i18n 
 * Added `Router.getLanguage`/`Router.setLanguage` methods.
 * Removed `Router.setLangCode` method.
