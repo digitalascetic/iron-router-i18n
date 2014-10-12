@@ -85,7 +85,7 @@ Router.configure({
 });
 ```
 
-### Basic use
+### Basic usage
 
 Iron Router i18n can be used out of the box with its default route i18n alias strategy which just prefix routes with 
 language codes e.g. the `about` route with path `/about` will be `/en/about` for english  and `/es/about` for spanish.
@@ -191,6 +191,10 @@ is to change the url according to the default lang code "prefix" strategy and se
 ``options.i18n.setLanguage``
 method.
 
+#### getDefaultLanguage()
+
+Returns the default language for the Router. Default implementation just return "en".
+
 
 ### Methods
 
@@ -202,6 +206,11 @@ Programmatically changes the router language.
 #### Router.getLanguage()
 
 Gets the current language the router is using for i18n.
+
+#### Router.getDefaultLanguage()
+
+Gets the default language the router is using for i18n.
+
 
 ### Helpers
 
