@@ -13,6 +13,10 @@ Router.configure({
 
         setLanguage: function (lang) {
             Router.options.i18n.language = lang;
+        },
+
+        getDefaultLanguage: function() {
+            'en';
         }
 
     }
