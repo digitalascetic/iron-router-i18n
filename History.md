@@ -1,3 +1,11 @@
+## v0.3.0
+
+* Moved i18n configuration process on overridden Router.configure method (just happen once on Router initialization).  
+* Added tests and improved test system
+* Added the possibility to configure custom i18n paths for routes. 
+* Fixed #8, specify on warning and error messages whether it's a client or server issue.
+* Fixed #7, double "/" on overridden Router.path.
+
 ## v0.2.4
 
 * Fixed bug #6, Router.go hash options not working.

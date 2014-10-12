@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.2.4
+**Latest Version:** 0.3.0
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -28,13 +28,14 @@ redirect and path rewrite but each of these is overridable on Router configurati
 e.g. one can support different behaviour on missing lang code (e.g. not redirect but directly serve default language) 
 or use different language aware url schema e.g. `http://example.com/test.it` instead of `http://example.com/it/test`.
 * Provides reactive `pathFor` `urlFor` helpers that change reactively on router language change.
+* Provides custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
+
 
 
 ### TODO:
 
 * Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Provide/review server side behaviour (most of the code is client and server but missing server HTTP part).
-* Provide custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
 
 
 Iron Router i18n works with Iron Router 0.9.1 and above.
@@ -83,6 +84,42 @@ Router.configure({
     }
 });
 ```
+
+### Basic use
+
+Iron Router i18n can be used out of the box with its default route i18n alias strategy which just prefix routes with 
+language codes e.g. the `about` route with path `/about` will be `/en/about` for english  and `/es/about` for spanish.
+ 
+Since version 0.3.0 is also possible to specify custom path for i18n on each route. I18n routes configurations can 
+override other default route options in addition to `path`.
+ 
+```javascript
+
+Router.map(function () {
+
+     ...
+
+     this.route('about', {
+         path: '/about',
+         template: 'about',
+         i18n: {
+             languages: {
+                 it: {
+                     path: '/chi-siamo',
+                     template: 'about-it',
+                 },
+                 es: {
+                     path: '/quienes-somos'
+                 }
+             }
+         }
+ 
+     });
+     
+     ...
+     
+```
+
 
 ### Configuration options
 
