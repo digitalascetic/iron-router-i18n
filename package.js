@@ -1,8 +1,8 @@
 Package.describe({
-    summary: 'Iron router support for i18n routing prefix',
+    summary: 'Iron Router support for i18n',
     git: "https://github.com/yoolab/iron-router-i18n.git",
     name: "martino:iron-router-i18n",
-    version: '0.3.0'
+    version: '0.3.1'
 });
 
 Package.on_use(function (api) {

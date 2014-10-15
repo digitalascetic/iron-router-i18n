@@ -1,3 +1,8 @@
+## v0.3.1
+
+* Fix problem with `pathFor` and `urlFor` helpers (#10).
+
+
 ## v0.3.0
 
 * Moved i18n configuration process on overridden Router.configure method (just happen once on Router initialization).  
