@@ -8,10 +8,12 @@ TestRouter = {
 
     onRouteNotFoundCalled: false,
 
-
     initRouter: function () {
 
         var testRouter = this;
+
+        this.routes = [];
+        this.resetVar();
 
         Router.onRouteNotFound = function (path, options) {
             testRouter.onRouteNotFoundCalled = true;
@@ -237,5 +239,50 @@ if (Meteor.isClient) {
 
     });
 
-}
+    Tinytest.add('Router i18n - test helpers', function (test) {
+
+        TestRouter.initRouter();
+
+        Router.route('test-i18n',
+            {
+                path: '/test-i18n'
+            }
+        );
+
+        Router.route('about',
+            {
+                path: '/about',
+
+                i18n: {
+                    languages: {
+                        it: {
+                            path: '/chi-siamo'
+                        },
+                        es: {
+                            path: '/quienes-somos'
+                        }
+                    }
+                }
+
+            });
+
+        test.equal(Router.helpers.i18nPathFor('test-i18n', {}), 'en/test-i18n', '/en/test-i18n was not the result when calling pathFor with empty options.');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nPathFor('test-i18n', { hash: { lang: 'it'}}), 'it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nPathFor('about', {}), 'en/about', '/en/about was not the result when calling pathFor with empty options.');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'it'}}), 'it/chi-siamo', '/it/test-i18n was not the result when calling pathFor with lang = it option');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'es'}}), 'es/quienes-somos', '/it/test-i18n was not the result when calling pathFor with lang = es option');
+        TestRouter.resetVar();
+
+
+    });
+
+    }
 
