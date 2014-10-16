@@ -7,6 +7,12 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 **Latest Version:** 0.3.3
 
+**WARNING**
+
+Since release 0.3.3 hook `getLanguage` has been removed while hook `setLanguage` is optional (and is where the i18n system 
+should be hooked if you are using one. See the docs below). You can have the package working just by specifying the `languages`
+configuration property and use `setLanguage` if you want to hook an i18n system.
+
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
 
