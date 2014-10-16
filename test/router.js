@@ -59,7 +59,7 @@ if (Meteor.isClient) {
             }
         );
 
-        var resetVars = function() {
+        var resetVars = function () {
             TestRouter.resetVar();
             testRouteMatched = false;
         }
@@ -107,7 +107,7 @@ if (Meteor.isClient) {
         var postId = null;
 
 
-        var resetVars = function() {
+        var resetVars = function () {
             TestRouter.resetVar();
             testRouteMatchedEN = false;
             testRouteMatchedES = false;
@@ -266,23 +266,125 @@ if (Meteor.isClient) {
 
             });
 
-        test.equal(Router.helpers.i18nPathFor('test-i18n', {}), 'en/test-i18n', '/en/test-i18n was not the result when calling pathFor with empty options.');
+        test.equal(Router.helpers.i18nPathFor('test-i18n', {}), 'en/test-i18n', 'en/test-i18n was not the result when calling pathFor with empty options.');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('test-i18n', { hash: { lang: 'it'}}), 'it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
+        test.equal(Router.helpers.i18nPathFor('test-i18n', { hash: { lang: 'it'}}), 'it/test-i18n', 'it/test-i18n was not the result when calling pathFor with lang = it option');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('about', {}), 'en/about', '/en/about was not the result when calling pathFor with empty options.');
+        test.equal(Router.helpers.i18nPathFor('about', {}), 'en/about', 'en/about was not the result when calling pathFor with empty options.');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'it'}}), 'it/chi-siamo', '/it/test-i18n was not the result when calling pathFor with lang = it option');
+        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'it'}}), 'it/chi-siamo', 'it/test-i18n was not the result when calling pathFor with lang = it option');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'es'}}), 'es/quienes-somos', '/it/test-i18n was not the result when calling pathFor with lang = es option');
+        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'es'}}), 'es/quienes-somos', 'it/test-i18n was not the result when calling pathFor with lang = es option');
+        TestRouter.resetVar();
+
+
+        test.equal(Router.helpers.i18nURLFor('test-i18n', {}), 'http://localhost:3000/en/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nURLFor('test-i18n', { hash: { lang: 'it'}}), 'http://localhost:3000/it/test-i18n', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nURLFor('about', {}), 'http://localhost:3000/en/about', 'http://localhost:3000/en/about was not the result when calling pathFor with empty options.');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nURLFor('about', { hash: { lang: 'it'}}), 'http://localhost:3000/it/chi-siamo', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
+        TestRouter.resetVar();
+
+        test.equal(Router.helpers.i18nURLFor('about', { hash: { lang: 'es'}}), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = es option');
         TestRouter.resetVar();
 
 
     });
 
-    }
+    Tinytest.add('Router i18n - test i18n route configuration', function (test) {
+
+        TestRouter.initRouter();
+
+        Router.route('test-i18n',
+            {
+                path: '/test-i18n'
+            }
+        );
+
+        Router.route('about',
+            {
+                path: '/about',
+                layoutTemplate: 'base_layout',
+
+                i18n: {
+                    languages: {
+                        it: {
+                            path: '/chi-siamo',
+                            template: 'about_it_template'
+                        },
+                        es: {
+                            path: '/quienes-somos',
+                            layoutTemplate: 'es_layout'
+                        }
+                    }
+                }
+
+            });
+
+        test.isFalse(_.isUndefined(Router.routes['about']), 'Route name "about" was not found.');
+        test.equal(Router.routes['about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
+
+        test.isFalse(_.isUndefined(Router.routes['about_it']), 'en/test-i18n was not the result when calling pathFor with empty options.');
+        test.equal(Router.routes['about_it'].options.layoutTemplate, 'base_layout', 'Base layout of route "about_it" is not inherited as "base_layout".');
+        test.equal(Router.routes['about_it'].options.template, 'about_it_template', 'Template for route "about_it" is not overridden "about_it_template"');
+
+        test.isFalse(_.isUndefined(Router.routes['about_es']), 'en/test-i18n was not the result when calling pathFor with empty options.');
+        test.equal(Router.routes['about_es'].options.layoutTemplate, 'es_layout', 'Base layout of route "about_es" is not overridden as "es_layout".');
+
+    });
+
+    Tinytest.add('Router i18n - test i18n template name resolution', function (test) {
+
+        TestRouter.initRouter();
+
+        Router.route('test-i18n',
+            {
+                path: '/test-i18n'
+            }
+        );
+
+        Router.route('about',
+            {
+                path: '/about',
+                layoutTemplate: 'base_layout',
+
+                i18n: {
+                    languages: {
+                        it: {
+                            path: '/chi-siamo',
+                            template: 'about_it_template'
+                        },
+                        es: {
+                            path: '/quienes-somos',
+                            layoutTemplate: 'es_layout'
+                        }
+                    }
+                }
+
+            });
+
+        var controller;
+
+        controller = new RouteController(Router, Router.routes['about'], {});
+        test.equal(controller.lookupTemplate(), 'about', 'Template is not "about" for default route.');
+
+        controller = new RouteController(Router, Router.routes['about_es'], {});
+        test.equal(controller.lookupTemplate(), 'about', 'Template is not "about" for es route.');
+
+        controller = new RouteController(Router, Router.routes['about_it'], {});
+        test.equal(controller.lookupTemplate(), 'about_it_template', 'Template is not about "about_it_template" for it route.');
+
+
+    });
+
+}
 
