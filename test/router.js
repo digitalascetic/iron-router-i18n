@@ -1,4 +1,4 @@
-TestRouter = {
+var TestRouter = {
 
     missingLangCodeAction: false,
 
@@ -10,20 +10,19 @@ TestRouter = {
 
     initRouter: function () {
 
-        var testRouter = this;
-
-        this.routes = [];
-        this.resetVar();
+        var that = this;
+        that.routes = [];
+        that.resetVar();
 
         Router.onRouteNotFound = function (path, options) {
-            testRouter.onRouteNotFoundCalled = true;
+            that.onRouteNotFoundCalled = true;
         };
 
 
         Router.options.i18n.missingLangCodeAction = function (path, options) {
-            testRouter.missingPath = path;
-            testRouter.missingLangCodeAction = true;
-            testRouter.missingLangCodeActionOrig.apply(Router, [path, options]);
+            that.missingPath = path;
+            that.missingLangCodeAction = true;
+            that.missingLangCodeActionOrig.apply(Router, [path, options]);
         };
 
     },
@@ -32,11 +31,10 @@ TestRouter = {
         this.onRouteNotFoundCalled = false;
         this.missingLangCodeAction = false;
         this.missingPath = null;
-        Router.options.i18n.setLanguage('en');
+        Router.options.i18n.setLanguage(null);
     }
 
-}
-;
+};
 
 
 /*****************************************************************************/
@@ -47,6 +45,7 @@ if (Meteor.isClient) {
     Tinytest.add('Router i18n - test default language prefix strategy', function (test) {
 
         TestRouter.initRouter();
+
 
         var testRouteMatched = false;
         Router.route('test-i18n',
@@ -63,12 +62,12 @@ if (Meteor.isClient) {
             TestRouter.resetVar();
             testRouteMatched = false;
         }
-
-        Router.dispatch('/es/test-i18n');
-        test.isTrue(testRouteMatched, '/test-i18n route not matched for /es/test-i18n');
-        test.equal(Router.getOrigPath(), '/es/test-i18n', 'Original path is not preserved as /es/test-i18n');
-        resetVars();
-
+        /*
+         Router.dispatch('/es/test-i18n');
+         test.isTrue(testRouteMatched, '/test-i18n route not matched for /es/test-i18n');
+         test.equal(Router.getOrigPath(), '/es/test-i18n', 'Original path is not preserved as /es/test-i18n');
+         resetVars();
+         */
         Router.dispatch('/en/test-i18n');
         test.isTrue(testRouteMatched, '/test-i18n route not matched for /en/test-i18n');
         test.equal(Router.getOrigPath(), '/en/test-i18n', 'Original path is not preserved as /en/test-i18n');
@@ -237,6 +236,9 @@ if (Meteor.isClient) {
         test.equal(postId, "34", 'Post id not identified as "34" for /it/articolo/34');
         resetVars();
 
+        Router.dispatch('/');
+        resetVars();
+
     });
 
     Tinytest.add('Router i18n - test helpers', function (test) {
@@ -383,6 +385,41 @@ if (Meteor.isClient) {
         controller = new RouteController(Router, Router.routes['about_it'], {});
         test.equal(controller.lookupTemplate(), 'about_it_template', 'Template is not about "about_it_template" for it route.');
 
+
+    });
+
+    Tinytest.add('Router i18n - test methods', function (test) {
+
+        TestRouter.initRouter();
+
+        test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en".')
+
+        // Testing defaultLanguage configuration option
+        Router.configure({
+            i18n: {
+                defaultLanguage: 'es'
+            }
+        })
+        test.equal(Router.getDefaultLanguage(), 'es', 'Router default language after changing "defaultLanguage" conf option is not "es".');
+
+        // Testing getLanguage
+        test.equal(Router.getLanguage(), 'es', 'Router language is not "es" when having defaultLanguage "es".');
+
+        //Testing language change
+        Router.setLanguage('it');
+        test.equal(Router.getLanguage(), 'it', 'Router did not change language to "it"');
+
+
+        // Testing custom getDefaultLanguage method
+        Router.configure({
+            i18n: {
+                getDefaultLanguage: function() {
+                    return 'en';
+                }
+            }
+        });
+
+        test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en" after setting getDefaultLanguage method.')
 
     });
 
