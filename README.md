@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.3.2
+**Latest Version:** 0.3.3
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -53,9 +53,8 @@ $ meteor add martino:iron-router-i18n
 
 ### Basic configuration
 
-Basic configuration for the moment requires that at least `getLanguage`/`setLanguage` methods be defined on
-Router i18n configuration options. This two methods are thought as the "bridge" between the i18n system (not provided
-by iron-router-i18n) and iron-router-i18n itself.
+Basic configuration for the moment requires that at least `languages` configuration property methods be defined on
+Router i18n configuration options.
 
 Here below a very basic example using TAPi18n (all iron-router-i18n configuration options are within the i18n option
 namespace):
@@ -67,19 +66,7 @@ Router.configure({
 
     i18n: {
 
-        getLanguage: function () {
-            if (Meteor.isClient) {
-                return TAPi18n.getLanguage();
-            } else {
-                return 'en';
-            }
-        },
-
-        setLanguage: function (lang) {
-            if (Meteor.isClient) {
-                TAPi18n.setLanguage(lang);
-            }
-        }
+        languages: ['it', 'es', 'en']
 
     }
 });
@@ -171,6 +158,31 @@ Router.configure({
         getLangCode: function(path, options) {
           ...
         }
+
+    }
+});
+```
+
+#### setLanguage(lang)
+
+Called when the Router language is changed programmatically (`Router.setLanguage(lang)`) or when changing the current 
+language with a request containing a lang code e.g. `/es/about` will change the Router language and call this method.
+The method can be used to propagate the action to a i18n system e.g.
+
+```javascript
+Router.configure({
+
+    ...
+
+    i18n: {
+
+        ...
+        
+        setLanguage: function(lang) {
+          TAPi18n.setLanguage(lang);
+        }
+        
+        ...
 
     }
 });

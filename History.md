@@ -1,3 +1,8 @@
+## v0.3.3
+
+* **BREAKING CHANGE**: #11 `getLanguage` hook is not used anymore, `setLanguage` hook is now optional (see docs).
+* Fixed bug caused by `pathFor` returning paths without the initial slash (#10) 
+
 ## v0.3.2
 
 * Fixed several problems with default language configuration (see #11 and #13).
@@ -7,7 +12,6 @@
 ## v0.3.1
 
 * Fix problem with `pathFor` and `urlFor` helpers (#10).
-
 
 ## v0.3.0
 
