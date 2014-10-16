@@ -268,19 +268,19 @@ if (Meteor.isClient) {
 
             });
 
-        test.equal(Router.helpers.i18nPathFor('test-i18n', {}), 'en/test-i18n', 'en/test-i18n was not the result when calling pathFor with empty options.');
+        test.equal(Router.helpers.i18nPathFor('test-i18n', {}), '/en/test-i18n', 'en/test-i18n was not the result when calling pathFor with empty options.');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('test-i18n', { hash: { lang: 'it'}}), 'it/test-i18n', 'it/test-i18n was not the result when calling pathFor with lang = it option');
+        test.equal(Router.helpers.i18nPathFor('test-i18n', { hash: { lang: 'it'}}), '/it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('about', {}), 'en/about', 'en/about was not the result when calling pathFor with empty options.');
+        test.equal(Router.helpers.i18nPathFor('about', {}), '/en/about', '/en/about was not the result when calling pathFor with empty options.');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'it'}}), 'it/chi-siamo', 'it/test-i18n was not the result when calling pathFor with lang = it option');
+        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'it'}}), '/it/chi-siamo', '/it/chi-siamo was not the result when calling pathFor with lang = it option');
         TestRouter.resetVar();
 
-        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'es'}}), 'es/quienes-somos', 'it/test-i18n was not the result when calling pathFor with lang = es option');
+        test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'es'}}), '/es/quienes-somos', '/es/quienes-somos was not the result when calling pathFor with lang = es option');
         TestRouter.resetVar();
 
 
@@ -335,11 +335,11 @@ if (Meteor.isClient) {
         test.isFalse(_.isUndefined(Router.routes['about']), 'Route name "about" was not found.');
         test.equal(Router.routes['about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
 
-        test.isFalse(_.isUndefined(Router.routes['about_it']), 'en/test-i18n was not the result when calling pathFor with empty options.');
+        test.isFalse(_.isUndefined(Router.routes['about_it']), 'Route "about_it" does not exists.');
         test.equal(Router.routes['about_it'].options.layoutTemplate, 'base_layout', 'Base layout of route "about_it" is not inherited as "base_layout".');
         test.equal(Router.routes['about_it'].options.template, 'about_it_template', 'Template for route "about_it" is not overridden "about_it_template"');
 
-        test.isFalse(_.isUndefined(Router.routes['about_es']), 'en/test-i18n was not the result when calling pathFor with empty options.');
+        test.isFalse(_.isUndefined(Router.routes['about_es']), 'Route "about_es" does not exists.');
         test.equal(Router.routes['about_es'].options.layoutTemplate, 'es_layout', 'Base layout of route "about_es" is not overridden as "es_layout".');
 
     });
