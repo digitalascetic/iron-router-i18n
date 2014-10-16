@@ -31,7 +31,7 @@ var TestRouter = {
         this.onRouteNotFoundCalled = false;
         this.missingLangCodeAction = false;
         this.missingPath = null;
-        Router.options.i18n.setLanguage(null);
+        Router.setLanguage(null);
     }
 
 };
