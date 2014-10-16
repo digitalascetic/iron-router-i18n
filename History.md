@@ -1,3 +1,9 @@
+## v0.3.2
+
+* Fixed several problems with default language configuration (see #11 and #13).
+* Fixed some server side problems with some code that wasn't intended to run on the server 
+(still waiting to review the server part of the package)
+
 ## v0.3.1
 
 * Fix problem with `pathFor` and `urlFor` helpers (#10).

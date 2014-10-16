@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.3.1
+**Latest Version:** 0.3.2
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -143,6 +143,15 @@ Router.configure({
     }
 });
 ```
+
+#### defaultLanguage
+
+Set the default language for Iron Router i18n (defaults to 'en').
+
+#### getDefaultLanguage()
+
+Provides a method to return the default language for Iron Router i18n 
+(default implementation just returns defaultLanguage property) 
 
 #### getLangCode(path, options)
 
