@@ -19,6 +19,8 @@ Package.on_use(function (api) {
     api.use('ui', 'client');
 
     api.add_files('lib/router.js', ['client', 'server']);
+    api.add_files('lib/client/router.js', ['client']);
+    api.add_files('lib/server/router.js', ['server']);
     api.add_files('lib/route.js', ['client', 'server']);
     api.add_files('lib/client/ui/helpers.js', ['client']);
 
