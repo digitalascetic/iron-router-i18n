@@ -1,8 +1,11 @@
+var _i18n_hooks_server = _.clone(Router._i18n.hooks.server);
+var _i18n_hooks_client = _.clone(Router._i18n.hooks.client);
+var _i18n_hooks = _.clone(Router._i18n.hooks);
+var _i18n = _.clone(Router._i18n);
+
 var TestRouter = {
 
     missingLangCodeAction: false,
-
-    missingLangCodeActionOrig: Router.options.i18n.missingLangCodeAction,
 
     missingPath: null,
 
@@ -11,19 +14,32 @@ var TestRouter = {
     initRouter: function () {
 
         var that = this;
-        that.routes = [];
-        that.resetVar();
+
+        Router.options = {};
+        Router.routes = [];
+
+        Router._i18n = _.clone(_i18n);
+        Router._i18n.hooks = _.clone(_i18n_hooks);
+        Router._i18n.hooks.server = _.clone(_i18n_hooks_server);
+        Router._i18n.hooks.client = _.clone(_i18n_hooks_client);
+
+        this.resetVar();
 
         Router.onRouteNotFound = function (path, options) {
             that.onRouteNotFoundCalled = true;
         };
 
+        Router.configure({
+            i18n: {
+                client: {
+                    missingLangCodeAction: function (path, options) {
+                        that.missingPath = path;
+                        that.missingLangCodeAction = true;
+                    }
+                }
+            }
 
-        Router.options.i18n.missingLangCodeAction = function (path, options) {
-            that.missingPath = path;
-            that.missingLangCodeAction = true;
-            that.missingLangCodeActionOrig.apply(Router, [path, options]);
-        };
+        });
 
     },
 
@@ -31,11 +47,160 @@ var TestRouter = {
         this.onRouteNotFoundCalled = false;
         this.missingLangCodeAction = false;
         this.missingPath = null;
-        Router.setLanguage(null);
     }
 
 };
 
+/*****************************************************************************/
+/* Server and Client */
+/*****************************************************************************/
+Tinytest.add('Router i18n - test i18n Router configuration', function (test) {
+
+    TestRouter.initRouter();
+
+    var clientMissingLangCodeAction = false;
+
+    Router.configure({
+
+        i18n: {
+
+            serverSide: false,
+
+            client: {
+                missingLangCodeAction: function (path, options) {
+                    clientMissingLangCodeAction = true;
+                }
+            }
+        }
+
+    });
+
+    var reset = function () {
+        TestRouter.initRouter();
+        clientMissingLangCodeAction = false;
+    }
+
+    if (Meteor.isClient) {
+
+        Router.options.i18n.missingLangCodeAction.apply(Router, ['/missingRoute', Router.options]);
+        test.isTrue(clientMissingLangCodeAction, 'Client configured missingLangCodeAction was not called.');
+        reset();
+
+    }
+
+    Router.configure({
+
+        i18n: {
+
+            serverSide: true,
+
+            defaultLanguage: 'es',
+
+            client: {
+                defaultLanguage: 'en'
+            },
+
+            server: {
+                defaultLanguage: 'it'
+            }
+        }
+
+    });
+
+    if (Meteor.isServer) {
+        test.equal(Router.options.i18n.defaultLanguage, 'it', 'Default language for client is not "it" as overridden by configuration.');
+    } else {
+        test.equal(Router.options.i18n.defaultLanguage, 'en', 'Default language for client is not "it" as overridden by configuration.');
+
+    }
+    reset();
+});
+
+
+Tinytest.add('Router i18n - test Router methods', function (test) {
+
+    TestRouter.initRouter();
+
+    Router.configure({
+        i18n: {
+        }
+    })
+
+    test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en".')
+
+    TestRouter.initRouter();
+    Router.configure({
+        i18n: {
+            defaultLanguage: 'es'
+        }
+    })
+    test.equal(Router.getDefaultLanguage(), 'es', 'Router default language after changing "defaultLanguage" conf option is not "es".');
+
+    // Testing getLanguage
+    test.equal(Router.getLanguage(), 'es', 'Router language is not "es" when having defaultLanguage "es".');
+
+    //Testing language change
+    Router.setLanguage('it');
+    test.equal(Router.getLanguage(), 'it', 'Router did not change language to "it"');
+
+
+    // Testing custom getDefaultLanguage method
+    TestRouter.initRouter();
+
+    Router.configure({
+        i18n: {
+            getDefaultLanguage: function () {
+                return 'en';
+            }
+        }
+    });
+
+    test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en" after setting getDefaultLanguage method.')
+
+});
+//}
+
+Tinytest.add('Router i18n - test i18n route configuration', function (test) {
+
+    TestRouter.initRouter();
+
+    Router.route('test-i18n',
+        {
+            path: '/test-i18n'
+        }
+    );
+
+    Router.route('about',
+        {
+            path: '/about',
+            layoutTemplate: 'base_layout',
+
+            i18n: {
+                languages: {
+                    it: {
+                        path: '/chi-siamo',
+                        template: 'about_it_template'
+                    },
+                    es: {
+                        path: '/quienes-somos',
+                        layoutTemplate: 'es_layout'
+                    }
+                }
+            }
+
+        });
+
+    test.isFalse(_.isUndefined(Router.routes['about']), 'Route name "about" was not found.');
+    test.equal(Router.routes['about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
+
+    test.isFalse(_.isUndefined(Router.routes['about_it']), 'Route "about_it" does not exists.');
+    test.equal(Router.routes['about_it'].options.layoutTemplate, 'base_layout', 'Base layout of route "about_it" is not inherited as "base_layout".');
+    test.equal(Router.routes['about_it'].options.template, 'about_it_template', 'Template for route "about_it" is not overridden "about_it_template"');
+
+    test.isFalse(_.isUndefined(Router.routes['about_es']), 'Route "about_es" does not exists.');
+    test.equal(Router.routes['about_es'].options.layoutTemplate, 'es_layout', 'Base layout of route "about_es" is not overridden as "es_layout".');
+
+});
 
 /*****************************************************************************/
 /* Client */
@@ -302,47 +467,6 @@ if (Meteor.isClient) {
 
     });
 
-    Tinytest.add('Router i18n - test i18n route configuration', function (test) {
-
-        TestRouter.initRouter();
-
-        Router.route('test-i18n',
-            {
-                path: '/test-i18n'
-            }
-        );
-
-        Router.route('about',
-            {
-                path: '/about',
-                layoutTemplate: 'base_layout',
-
-                i18n: {
-                    languages: {
-                        it: {
-                            path: '/chi-siamo',
-                            template: 'about_it_template'
-                        },
-                        es: {
-                            path: '/quienes-somos',
-                            layoutTemplate: 'es_layout'
-                        }
-                    }
-                }
-
-            });
-
-        test.isFalse(_.isUndefined(Router.routes['about']), 'Route name "about" was not found.');
-        test.equal(Router.routes['about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
-
-        test.isFalse(_.isUndefined(Router.routes['about_it']), 'Route "about_it" does not exists.');
-        test.equal(Router.routes['about_it'].options.layoutTemplate, 'base_layout', 'Base layout of route "about_it" is not inherited as "base_layout".');
-        test.equal(Router.routes['about_it'].options.template, 'about_it_template', 'Template for route "about_it" is not overridden "about_it_template"');
-
-        test.isFalse(_.isUndefined(Router.routes['about_es']), 'Route "about_es" does not exists.');
-        test.equal(Router.routes['about_es'].options.layoutTemplate, 'es_layout', 'Base layout of route "about_es" is not overridden as "es_layout".');
-
-    });
 
     Tinytest.add('Router i18n - test i18n template name resolution', function (test) {
 
@@ -385,41 +509,6 @@ if (Meteor.isClient) {
         controller = new RouteController(Router, Router.routes['about_it'], {});
         test.equal(controller.lookupTemplate(), 'about_it_template', 'Template is not about "about_it_template" for it route.');
 
-
-    });
-
-    Tinytest.add('Router i18n - test methods', function (test) {
-
-        TestRouter.initRouter();
-
-        test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en".')
-
-        // Testing defaultLanguage configuration option
-        Router.configure({
-            i18n: {
-                defaultLanguage: 'es'
-            }
-        })
-        test.equal(Router.getDefaultLanguage(), 'es', 'Router default language after changing "defaultLanguage" conf option is not "es".');
-
-        // Testing getLanguage
-        test.equal(Router.getLanguage(), 'es', 'Router language is not "es" when having defaultLanguage "es".');
-
-        //Testing language change
-        Router.setLanguage('it');
-        test.equal(Router.getLanguage(), 'it', 'Router did not change language to "it"');
-
-
-        // Testing custom getDefaultLanguage method
-        Router.configure({
-            i18n: {
-                getDefaultLanguage: function() {
-                    return 'en';
-                }
-            }
-        });
-
-        test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en" after setting getDefaultLanguage method.')
 
     });
 

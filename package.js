@@ -30,6 +30,7 @@ Package.on_use(function (api) {
 
 Package.on_test(function (api) {
 
+    api.use('underscore', ['client', 'server']);
     api.use('iron:router', ['client', 'server']);
     api.use("martino:iron-router-i18n", ['client', 'server']);
     api.use('tinytest', ['client', 'server']);
