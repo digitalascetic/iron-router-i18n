@@ -121,6 +121,8 @@ Meteor.startup(function() {
 });
 ```
 
+This could be soon made unnecessary or even deprecated (see https://github.com/yoolab/iron-router-i18n/issues/16)
+
 ### Configuration options
 
 #### languages
