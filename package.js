@@ -2,7 +2,7 @@ Package.describe({
     summary: 'Iron Router support for i18n',
     git: "https://github.com/yoolab/iron-router-i18n.git",
     name: "martino:iron-router-i18n",
-    version: '0.3.3'
+    version: '0.4.0'
 });
 
 Package.on_use(function (api) {

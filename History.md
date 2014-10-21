@@ -1,3 +1,10 @@
+## v0.4.0
+
+* Added server side behaviours (redirect to lang code URL when lang code is missing)
+* Added automatic initial language configuration for client and server
+* Reintroduced `getLanguage` hook (gives the possibility to have a different language strategy on server side (e.g. user session based)
+* Refactored test system and added server and client side tests
+
 ## v0.3.3
 
 * **BREAKING CHANGE**: #11 `getLanguage` hook is not used anymore, `setLanguage` hook is now optional (see docs).

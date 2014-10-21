@@ -5,13 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.3.3
-
-**WARNING**
-
-Since release 0.3.3 hook `getLanguage` has been removed while hook `setLanguage` is optional (and is where the i18n system 
-should be hooked if you are using one. See the docs below). You can have the package working just by specifying the `languages`
-configuration property and use `setLanguage` if you want to hook an i18n system.
+**Latest Version:** 0.4.0
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -35,13 +29,8 @@ e.g. one can support different behaviour on missing lang code (e.g. not redirect
 or use different language aware url schema e.g. `http://example.com/test.it` instead of `http://example.com/it/test`.
 * Provides reactive `pathFor` `urlFor` helpers that change reactively on router language change.
 * Provides custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
-
-
-
-### TODO:
-
 * Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
-* Provide/review server side behaviour (most of the code is client and server but missing server HTTP part).
+* Provide server side behaviour, e.g. use a 301 redirect to lang code path when calling a 
 
 
 Iron Router i18n works with Iron Router 0.9.1 and above.
@@ -141,6 +130,19 @@ Router.configure({
 
 Set the default language for Iron Router i18n (defaults to 'en').
 
+#### autoConfLanguage
+
+If set to true Iron Router i18n will try to autodetect the best language to use for current browser/request (defaults to false).
+
+### serverSide (just server)
+
+Enable (true) or disable (false) server side functionality (default: false).
+
+### redirectCode (just server)
+
+The redirect code to use when redirecting when the lang code is missing from path (default: 301)
+
+
 #### getDefaultLanguage()
 
 Provides a method to return the default language for Iron Router i18n 
@@ -168,6 +170,11 @@ Router.configure({
     }
 });
 ```
+
+#### getLanguage(lang)
+
+Called by `Router.getLanguage` to retrieve current language. Default implementaion just use a local property.
+
 
 #### setLanguage(lang)
 
