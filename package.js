@@ -18,6 +18,8 @@ Package.on_use(function (api) {
     // for helpers
     api.use('ui', 'client');
 
+    Npm.depends({locale: "0.0.20"});
+
     api.add_files('lib/router.js', ['client', 'server']);
     api.add_files('lib/client/router.js', ['client']);
     api.add_files('lib/server/router.js', ['server']);

@@ -116,50 +116,6 @@ Tinytest.add('Router i18n - test i18n Router configuration', function (test) {
     reset();
 });
 
-
-Tinytest.add('Router i18n - test Router methods', function (test) {
-
-    TestRouter.initRouter();
-
-    Router.configure({
-        i18n: {
-        }
-    })
-
-    test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en".')
-
-    TestRouter.initRouter();
-    Router.configure({
-        i18n: {
-            defaultLanguage: 'es'
-        }
-    })
-    test.equal(Router.getDefaultLanguage(), 'es', 'Router default language after changing "defaultLanguage" conf option is not "es".');
-
-    // Testing getLanguage
-    test.equal(Router.getLanguage(), 'es', 'Router language is not "es" when having defaultLanguage "es".');
-
-    //Testing language change
-    Router.setLanguage('it');
-    test.equal(Router.getLanguage(), 'it', 'Router did not change language to "it"');
-
-
-    // Testing custom getDefaultLanguage method
-    TestRouter.initRouter();
-
-    Router.configure({
-        i18n: {
-            getDefaultLanguage: function () {
-                return 'en';
-            }
-        }
-    });
-
-    test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en" after setting getDefaultLanguage method.')
-
-});
-//}
-
 Tinytest.add('Router i18n - test i18n route configuration', function (test) {
 
     TestRouter.initRouter();
@@ -206,6 +162,48 @@ Tinytest.add('Router i18n - test i18n route configuration', function (test) {
 /* Client */
 /*****************************************************************************/
 if (Meteor.isClient) {
+
+    Tinytest.add('Router i18n - test Router methods', function (test) {
+
+        TestRouter.initRouter();
+
+        Router.configure({
+            i18n: {
+            }
+        })
+
+        test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en".')
+
+        TestRouter.initRouter();
+        Router.configure({
+            i18n: {
+                defaultLanguage: 'es'
+            }
+        })
+        test.equal(Router.getDefaultLanguage(), 'es', 'Router default language after changing "defaultLanguage" conf option is not "es".');
+
+        // Testing getLanguage
+        test.equal(Router.getLanguage(), 'es', 'Router language is not "es" when having defaultLanguage "es".');
+
+        //Testing language change
+        Router.setLanguage('it');
+        test.equal(Router.getLanguage(), 'it', 'Router did not change language to "it"');
+
+
+        // Testing custom getDefaultLanguage method
+        TestRouter.initRouter();
+
+        Router.configure({
+            i18n: {
+                getDefaultLanguage: function () {
+                    return 'en';
+                }
+            }
+        });
+
+        test.equal(Router.getDefaultLanguage(), 'en', 'Router default language is not "en" after setting getDefaultLanguage method.')
+
+    });
 
     Tinytest.add('Router i18n - test default language prefix strategy', function (test) {
 
