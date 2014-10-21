@@ -67,6 +67,7 @@ Router.configure({
 });
 ```
 
+
 ### Basic usage
 
 Iron Router i18n can be used out of the box with its default route i18n alias strategy which just prefix routes with 
@@ -102,6 +103,23 @@ Router.map(function () {
      
 ```
 
+If you are configuring routes in packages be sure to wrap route configuration in a `Meteor.startup` script otherwise 
+the Router i18n configuration which is needed to add i18n aware routes will not be available when the route is configured
+(see https://github.com/yoolab/iron-router-i18n/issues/10)
+
+
+`packages/route-b-package`
+```javascript
+Meteor.startup(function() {
+    // some basic routes
+    Router.map(function () {
+        this.route("routeB", {
+            path: "/route-b"
+        });
+    });
+
+});
+```
 
 ### Configuration options
 
