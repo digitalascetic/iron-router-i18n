@@ -151,6 +151,8 @@ Provides a method to return the default language for Iron Router i18n
 #### getLangCode(path, options)
 
 Given the path returns the language code (or null if no language code is found in the path).
+Default implementation return the language prefix, e.g. for path `/de/about` will return "de".
+By changing `getLangCode` and `setLangCode` can be used alternatives strategies to language prefixing.
 
 E.g.
 
@@ -203,13 +205,15 @@ Router.configure({
 
 #### missingLangCodeAction(path, options)
 
-Action to be taken when no language code can be found in path (default is trying to redirect to a language aware path
-based on the current configured language).
+Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path
+based on the current configured language). E.g. when receiving a request for `/about` and the current language is "en"
+it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en/about`.
 
 
 #### langCodeAction(path, options)
 
-Action to be taken when a language code is found. Default is using ``options.i18n.setLanguage`` to set the language.
+Action to be taken when a language code is found by `getLangCode`. Default is using `Router.setLanguage` to set the language.
+E.g. when `/es/about` is called and the current language is not spanish, the current language will be switched to spanish.
 
 
 #### rewritePath(path, options)
@@ -221,9 +225,9 @@ Default strategy is to strip language code so that the path can match language a
 #### setLangCode(lang)
 
 Action to be taken when switching programmatically the language code in the URL (see "Methods" below). Default behaviour
-is to change the url according to the default lang code "prefix" strategy and set the language accordingly through 
-``options.i18n.setLanguage``
-method.
+is to change the url according to the default lang code "prefix" strategy. E.g. if calling `Router.setLanguage('it')`
+while at path '/en/about' of the above example conf it will automatically switch the location to `/it/chi-siamo`.
+
 
 #### getDefaultLanguage()
 
