@@ -1,3 +1,7 @@
+## v0.4.1
+
+* Fixed a bug in missing lang code redirect.
+
 ## v0.4.0
 
 * Added server side behaviours (redirect to lang code URL when lang code is missing)
