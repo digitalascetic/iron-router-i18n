@@ -145,8 +145,9 @@ The redirect code to use when redirecting when the lang code is missing from pat
 
 #### getDefaultLanguage()
 
-Provides a method to return the default language for Iron Router i18n 
-(default implementation just returns defaultLanguage property) 
+Provides a method to return the default "fallback" language for Iron Router i18n. This is the language "fallback" language
+ used when no current language is defined with `Router.setLanguage` or by using `autoConfLanguage`.
+(default implementation just returns defaultLanguage property which default to "en"). 
 
 #### getLangCode(path, options)
 
@@ -238,16 +239,17 @@ Returns the default language for the Router. Default implementation just return 
 
 #### Router.setLanguage(lang)
 
-Programmatically changes the router language.
+Programmatically changes the router language. This can be used to set the router language based on some user properties
+(e.g. after login or on the startup script based on some cookie) or when a user switch the language with some action.
 
 
 #### Router.getLanguage()
 
-Gets the current language the router is using for i18n.
+Retrieves the current language the router is using.
 
 #### Router.getDefaultLanguage()
 
-Gets the default language the router is using for i18n.
+Gets the default language the router is using (see `defaultLanguage` property and `getDefaultLanguage` hook)
 
 
 ### Helpers
