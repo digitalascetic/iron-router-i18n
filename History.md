@@ -1,3 +1,7 @@
+## v0.4.2
+
+* Made routes added in packages behave the same as routes added in the main app. (#16)
+
 ## v0.4.1
 
 * Fixed a bug in missing lang code redirect.

@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.4.1
+**Latest Version:** 0.4.2
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -102,26 +102,6 @@ Router.map(function () {
      ...
      
 ```
-
-If you are configuring routes in packages be sure to wrap route configuration in a `Meteor.startup` script otherwise 
-the Router i18n configuration which is needed to add i18n aware routes will not be available when the route is configured
-(see https://github.com/yoolab/iron-router-i18n/issues/10)
-
-
-`packages/route-b-package`
-```javascript
-Meteor.startup(function() {
-    // some basic routes
-    Router.map(function () {
-        this.route("routeB", {
-            path: "/route-b"
-        });
-    });
-
-});
-```
-
-This could be soon made unnecessary or even deprecated (see https://github.com/yoolab/iron-router-i18n/issues/16)
 
 ### Configuration options
 
