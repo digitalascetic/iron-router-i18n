@@ -208,7 +208,8 @@ Router.configure({
 
 Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path
 based on the current configured language). E.g. when receiving a request for `/about` and the current language is "en"
-it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en/about`.
+it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en/about`. If the function returns `true` the 
+request dispatch will return immediately after this method execution, otherwise it will continue normally.
 
 
 #### langCodeAction(path, options)

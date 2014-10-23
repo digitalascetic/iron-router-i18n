@@ -1,3 +1,10 @@
+## v0.4.3
+
+* Fixed bug that caused incorrect history when hardcoding path without "lang" in `a`. Modified `missingLangActionCode`
+ behaviour: if it returns `true` request dispatch will return immediately, otherwise it will go ahead. (#18)
+
+
+
 ## v0.4.2
 
 * Made routes added in packages behave the same as routes added in the main app. (#16)
