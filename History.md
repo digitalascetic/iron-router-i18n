@@ -2,7 +2,7 @@
 
 * Fixed bug that caused incorrect history when hardcoding path without "lang" in `a`. Modified `missingLangActionCode`
  behaviour: if it returns `true` request dispatch will return immediately, otherwise it will go ahead. (#18)
-
+* Fixed bug on server side use of locale package (#17)
 
 
 ## v0.4.2
