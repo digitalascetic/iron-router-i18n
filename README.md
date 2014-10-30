@@ -10,6 +10,9 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
 
+**Iron Router i18n works with Iron Router 0.9.x. Forthcoming 0.5 version will support new Iron Router 1.0.**
+
+
 ## About
 
 Iron Router i18n adds support for i18n routes to Iron Router package for Meteor.
@@ -32,8 +35,6 @@ or use different language aware url schema e.g. `http://example.com/test.it` ins
 * Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Provide server side behaviour, e.g. use a 301 redirect to lang code path when calling a 
 
-
-Iron Router i18n works with Iron Router 0.9.x. Forthcoming 0.5 version will support new Iron Router 1.0.
 
 
 ##  Installation
