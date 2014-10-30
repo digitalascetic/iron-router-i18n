@@ -33,7 +33,7 @@ or use different language aware url schema e.g. `http://example.com/test.it` ins
 * Provide server side behaviour, e.g. use a 301 redirect to lang code path when calling a 
 
 
-Iron Router i18n works with Iron Router 0.9.1 and above.
+Iron Router i18n works with Iron Router 0.9.x. Forthcoming 0.5 version will support new Iron Router 1.0.
 
 
 ##  Installation
