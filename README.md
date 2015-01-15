@@ -2,6 +2,9 @@
 
 Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/iron-router) package.
 
+## Support for Iron Router 1.0
+
+Support for Iron Router 1.0 is planned for the first week of February 2015 (thanks for the patience :-) ).
 
 ## History
 
