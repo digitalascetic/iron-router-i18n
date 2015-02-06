@@ -14,6 +14,7 @@ See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/Hist
 versions.
 
 **Iron Router i18n works with Iron Router 0.9.x. Forthcoming 0.5 version will support new Iron Router 1.0.**
+** Follow https://github.com/yoolab/iron-router-i18n/issues/19 for updates on 0.5 version **
 
 
 ## About
