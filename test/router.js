@@ -411,6 +411,67 @@ if (Meteor.isClient) {
     });
 
 
+
+
+    Tinytest.add('Router i18n - test helpers', function (test) {
+
+        //Router = initRouter();
+
+        defaultConf(Router);
+
+        Router.route('test-i18n',
+            {
+                path: '/test-i18n'
+            }
+        );
+
+        Router.route('about',
+            {
+                path: '/about',
+
+                i18n: {
+                    languages: {
+                        it: {
+                            path: '/chi-siamo'
+                        },
+                        es: {
+                            path: '/quienes-somos'
+                        }
+                    }
+                }
+
+            });
+
+        var pathFor = Blaze._globalHelpers['pathFor'];
+
+        test.equal(pathFor('test-i18n', {}), '/es/test-i18n', 'es/test-i18n was not the result when calling pathFor with empty options.');
+
+        test.equal(pathFor('test-i18n', { hash: { lang: 'it'}}), '/it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
+
+        test.equal(pathFor('about'), '/es/about', '/es/about was not the result when calling pathFor with empty options.');
+
+        test.equal(pathFor('about', {hash: { lang: 'it'}}), '/it/chi-siamo', '/it/chi-siamo was not the result when calling pathFor with lang = it option');
+
+        test.equal(pathFor('about', {hash: { lang: 'es'}}), '/es/quienes-somos', '/es/quienes-somos was not the result when calling pathFor with lang = es option');
+
+
+        var urlFor = Blaze._globalHelpers['urlFor'];
+
+        test.equal(urlFor('test-i18n', {}), 'http://localhost:3000/es/test-i18n', 'http://localhost:3000/es/test-i18n was not the result when calling pathFor with empty options.');
+
+        test.equal(urlFor('test-i18n', { hash: { lang: 'it'}}), 'http://localhost:3000/it/test-i18n', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
+
+        test.equal(urlFor('about', {}), 'http://localhost:3000/es/about', 'http://localhost:3000/es/about was not the result when calling pathFor with empty options.');
+
+        test.equal(urlFor('about', { hash: { lang: 'it'}}), 'http://localhost:3000/it/chi-siamo', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
+
+        test.equal(urlFor('about', { hash: { lang: 'es'}}), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = es option');
+
+    });
+
+
+
+
 }
 
 
@@ -426,71 +487,6 @@ if (Meteor.isClient) {
 
 /*
  if (Meteor.isClient) {
-
-
-
-
-
- Tinytest.add('Router i18n - test helpers', function (test) {
-
- TestRouter.initRouter();
-
- Router.route('test-i18n',
- {
- path: '/test-i18n'
- }
- );
-
- Router.route('about',
- {
- path: '/about',
-
- i18n: {
- languages: {
- it: {
- path: '/chi-siamo'
- },
- es: {
- path: '/quienes-somos'
- }
- }
- }
-
- });
-
- test.equal(Router.helpers.i18nPathFor('test-i18n', {}), '/en/test-i18n', 'en/test-i18n was not the result when calling pathFor with empty options.');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nPathFor('test-i18n', { hash: { lang: 'it'}}), '/it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nPathFor('about', {}), '/en/about', '/en/about was not the result when calling pathFor with empty options.');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'it'}}), '/it/chi-siamo', '/it/chi-siamo was not the result when calling pathFor with lang = it option');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nPathFor('about', { hash: { lang: 'es'}}), '/es/quienes-somos', '/es/quienes-somos was not the result when calling pathFor with lang = es option');
- TestRouter.resetVar();
-
-
- test.equal(Router.helpers.i18nURLFor('test-i18n', {}), 'http://localhost:3000/en/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nURLFor('test-i18n', { hash: { lang: 'it'}}), 'http://localhost:3000/it/test-i18n', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nURLFor('about', {}), 'http://localhost:3000/en/about', 'http://localhost:3000/en/about was not the result when calling pathFor with empty options.');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nURLFor('about', { hash: { lang: 'it'}}), 'http://localhost:3000/it/chi-siamo', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
- TestRouter.resetVar();
-
- test.equal(Router.helpers.i18nURLFor('about', { hash: { lang: 'es'}}), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = es option');
- TestRouter.resetVar();
-
-
- });
 
 
  Tinytest.add('Router i18n - test i18n template name resolution', function (test) {

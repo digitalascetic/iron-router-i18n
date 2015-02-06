@@ -24,12 +24,12 @@ Package.on_use(function (api) {
     api.add_files('lib/router_client.js', ['client']);
     api.add_files('lib/router_server.js', ['server']);
     api.add_files('lib/route.js', ['client', 'server']);
-    api.add_files('lib/helpers.js', ['client']);
     api.add_files('lib/global.js', ['client', 'server']);
-
+    api.add_files('lib/helpers.js', ['client']);
 
     api.export('Router', ['client', 'server']);
     api.export('I18NRouter', ['client', 'server']);
+
 });
 
 Package.on_test(function (api) {
