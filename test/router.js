@@ -211,6 +211,15 @@ if (Meteor.isClient) {
 
         defaultConf(router);
 
+        var missingLangCodeAction = false;
+        router.configure({
+            i18n: {
+                missingLangCodeAction: function () {
+                    missingLangCodeAction = true;
+                }
+            }
+        });
+
         var testRouteMatched = false;
 
         var resetRouter = function () {
@@ -249,18 +258,18 @@ if (Meteor.isClient) {
         // Testing missingLangCodeAction
 
         // Lang code "de" not in allowed languages
-        /*
-         router.dispatch('/de/test-i18n');
-         test.isTrue(TestRouter.onRouteNotFoundCalled, '/test-i18n route matched for /de/test while "de" not allowed language');
-         test.equal(TestRouter.missingPath, '/de/test-i18n', '/test-i18n route matched for /de/test-i18n while de not allowed language');
-         resetVars();
+
+        // router.dispatch('/de/test-i18n');
+        //  test.isTrue(TestRouter.onRouteNotFoundCalled, '/test-i18n route matched for /de/test while "de" not allowed language');
+        //  test.equal(TestRouter.missingPath, '/de/test-i18n', '/test-i18n route matched for /de/test-i18n while de not allowed language');
+        //  resetRouter();
 
 
-         // Lang code missing
-         router.dispatch('/test-i18n');
-         test.isTrue(TestRouter.missingLangCodeAction, '/test-i18n: missingLangCodeAction not called on route without lang code');
-         resetVars();
-         */
+        // Lang code missing
+
+        router.dispatch('/test-i18n');
+        test.isTrue(missingLangCodeAction, '/test-i18n: missingLangCodeAction not called on route without lang code');
+
 
     });
 
@@ -468,7 +477,6 @@ if (Meteor.isClient) {
     });
 
 
-
     Tinytest.add('Router i18n - test i18n template name resolution', function (test) {
 
         var router = initRouter();
@@ -510,7 +518,6 @@ if (Meteor.isClient) {
 
 
     });
-
 
 
 }
