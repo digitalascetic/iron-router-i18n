@@ -44,6 +44,8 @@ Package.on_test(function (api) {
     api.use('tinytest', ['client', 'server']);
     api.use('test-helpers', ['client', 'server']);
 
+    api.add_files('test/common.js', ['client', 'server']);
     api.add_files('test/router.js', ['client', 'server']);
+    api.add_files('test/router_client.js', ['client']);
 
 });
