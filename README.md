@@ -115,6 +115,37 @@ or, with new Iron Router 1.0.x
 
 ```
 
+or
+
+```javascript
+
+     Router.route('/about', function() {
+
+        var lang = this.getLanguage();
+
+        if (lang == 'it') {
+            this.render('about_it');
+        } else {
+            this.render('about');
+        }
+
+     },
+
+     {
+
+         i18n: {
+             languages: {
+                 it: {
+                     path: '/chi-siamo',
+                 }
+             }
+         }
+
+     });
+
+
+```
+
 Given the router configuration above both configurations will create 3 routes:
 
 * `/en/about/` the "default language" route with template "about"
