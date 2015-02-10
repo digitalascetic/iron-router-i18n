@@ -527,6 +527,115 @@ function testLangVaryingConfiguration(test, env) {
 
 }
 
+function testRootRoute(test, env) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    var testRouteMatched = false;
+
+    var resetRouter = function () {
+        testRouteMatched = false;
+    }
+
+    router.route('/',
+        {
+            action: function () {
+                testRouteMatched = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    var res = {
+        setHeader: function () {
+        },
+        end: function () {
+        }
+    };
+    var next = function () {
+    };
+
+    var req = {url: '/es'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"es" route not matched for /es');
+    resetRouter();
+
+    req = {url: '/en'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"en" route not matched for /en');
+    resetRouter();
+
+    req = {url: '/it'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"it" route not matched for /it');
+    resetRouter();
+
+}
+
+function testRouteWithFN(test, env) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    var testRouteMatched = false;
+    var testRouteMatchedIT = false;
+
+    var resetRouter = function () {
+        testRouteMatched = false;
+        testRouteMatchedIT = false;
+    }
+
+    router.route('/test', function () {
+        testRouteMatched = true;
+    }, {
+
+        i18n: {
+            languages: {
+                it: {
+                    action: function () {
+                        testRouteMatchedIT = true;
+                    }
+                }
+            }
+        },
+
+        where: env
+
+    })
+
+
+    var res = {
+        setHeader: function () {
+        },
+        end: function () {
+        }
+    };
+    var next = function () {
+    };
+
+    var req = {url: '/es/test'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"es.test" route not matched for /es/test');
+    test.isFalse(testRouteMatchedIT, '"es.test" route not matched for /es/test');
+    resetRouter();
+
+    req = {url: '/en/test'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"en.test" route not matched for /en/test');
+    test.isFalse(testRouteMatchedIT, '"en.test" route not matched for /en/test');
+    resetRouter();
+
+    req = {url: '/it/test'};
+    router(req, res, next);
+    test.isTrue(testRouteMatchedIT, '"it.test" route not matched for /it/test');
+
+}
+
 
 if (Meteor.isClient) {
 
@@ -546,6 +655,18 @@ if (Meteor.isClient) {
     Tinytest.add('Router i18n - test lang varying configuration', function (test) {
 
         testLangVaryingConfiguration(test, 'client');
+
+    });
+
+    Tinytest.add('Router i18n - test root route', function (test) {
+
+        testRootRoute(test, 'client');
+
+    });
+
+    Tinytest.add('Router i18n - test route with fn', function (test) {
+
+        testRouteWithFN(test, 'client');
 
     });
 
@@ -570,6 +691,18 @@ if (Meteor.isServer) {
     Tinytest.add('Router i18n - test lang varying configuration', function (test) {
 
         testLangVaryingConfiguration(test, 'server');
+
+    });
+
+    Tinytest.add('Router i18n - test root route', function (test) {
+
+        testRootRoute(test, 'server');
+
+    });
+
+    Tinytest.add('Router i18n - test route with fn', function (test) {
+
+        testRouteWithFN(test, 'server');
 
     });
 

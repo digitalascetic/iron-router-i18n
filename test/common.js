@@ -16,7 +16,9 @@ defaultConf = function (router) {
 
             defaultLanguage: 'en',
 
-            languages: ['it', 'es', 'en']
+            languages: ['it', 'es', 'en'],
+
+            setLangCode: false
 
         }
 
