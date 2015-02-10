@@ -72,6 +72,8 @@ Tinytest.add('Router i18n - test i18n missingLangCodeAction call', function (tes
 
         i18n: {
 
+            compulsoryLangCode: true,
+
             serverSide: true,
 
             missingLangCodeAction: function (path, options) {
@@ -236,8 +238,12 @@ function testDefaultLanguagePrefix(test, env) {
     defaultConf(router);
 
     var missingLangCodeAction = false;
+
     router.configure({
         i18n: {
+
+            compulsoryLangCode: true,
+
             missingLangCodeAction: function () {
                 missingLangCodeAction = true;
             }
@@ -275,9 +281,9 @@ function testDefaultLanguagePrefix(test, env) {
     test.isTrue(testRouteMatched, '/test-i18n route not matched for /es/test-i18n');
     resetRouter();
 
-    req = {url: '/en/test-i18n'};
+    req = {url: '/test-i18n'};
     router(req, res, next);
-    test.isTrue(testRouteMatched, '/test-i18n route not matched for /en/test-i18n');
+    test.isTrue(testRouteMatched, '/test-i18n route not matched for /test-i18n');
     resetRouter();
 
     req = {url: '/it/test-i18n'};
@@ -285,22 +291,10 @@ function testDefaultLanguagePrefix(test, env) {
     test.isTrue(testRouteMatched, '/test-i18n route not matched for /it/test-i18n');
     resetRouter();
 
-
-    // Testing missingLangCodeAction
-
-    // Lang code "de" not in allowed languages
-
-    // router.dispatch('/de/test-i18n');
-    //  test.isTrue(TestRouter.onRouteNotFoundCalled, '/test-i18n route matched for /de/test while "de" not allowed language');
-    //  test.equal(TestRouter.missingPath, '/de/test-i18n', '/test-i18n route matched for /de/test-i18n while de not allowed language');
-    //  resetRouter();
-
-
     // Lang code missing
     req = {url: '/test-i18n'};
     router(req, res, next);
     test.isTrue(missingLangCodeAction, '/test-i18n: missingLangCodeAction not called on route without lang code');
-
 
 }
 
@@ -475,16 +469,6 @@ function testLangVaryingConfiguration(test, env) {
 
     defaultConf(router);
 
-    var missingLangCodeAction = false;
-
-    router.configure({
-        i18n: {
-            missingLangCodeAction: function () {
-                missingLangCodeAction = true;
-            }
-        }
-    });
-
     var testRouteMatched = false;
     var differentAction = false;
 
@@ -540,23 +524,6 @@ function testLangVaryingConfiguration(test, env) {
     test.isFalse(testRouteMatched, '"test-i18n" route matched for /it/test-i18n');
     test.isTrue(differentAction, 'it/test-i18n route not matched for /it/test-i18n');
     resetRouter();
-
-
-    // Testing missingLangCodeAction
-
-    // Lang code "de" not in allowed languages
-
-    // router.dispatch('/de/test-i18n');
-    //  test.isTrue(TestRouter.onRouteNotFoundCalled, '/test-i18n route matched for /de/test while "de" not allowed language');
-    //  test.equal(TestRouter.missingPath, '/de/test-i18n', '/test-i18n route matched for /de/test-i18n while de not allowed language');
-    //  resetRouter();
-
-
-    // Lang code missing
-    req = {url: '/test-i18n'};
-    router(req, res, next);
-    test.isTrue(missingLangCodeAction, '/test-i18n: missingLangCodeAction not called on route without lang code');
-
 
 }
 
