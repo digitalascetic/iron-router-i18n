@@ -14,7 +14,7 @@ defaultConf = function (router) {
 
         i18n: {
 
-            defaultLanguage: 'es',
+            defaultLanguage: 'en',
 
             languages: ['it', 'es', 'en']
 
