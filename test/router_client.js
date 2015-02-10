@@ -27,15 +27,15 @@ Tinytest.add('Router i18n - test helpers', function (test) {
 
     var pathFor = Blaze._globalHelpers['pathFor'];
 
-    test.equal(pathFor('test-i18n', {}), '/es/test-i18n', 'es/test-i18n was not the result when calling pathFor with empty options.');
+    test.equal(pathFor('test-i18n', {}), '/es/test-i18n', '/es/test-i18n was not the result when calling pathFor with empty options.');
 
     test.equal(pathFor('test-i18n', {hash: {lang: 'it'}}), '/it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
 
-    test.equal(pathFor('about'), '/es/about', '/es/about was not the result when calling pathFor with empty options.');
+    test.equal(pathFor('about'), '/es/quienes-somos', '/es/quienes-somos was not the result when calling pathFor with empty options.');
 
     test.equal(pathFor('about', {hash: {lang: 'it'}}), '/it/chi-siamo', '/it/chi-siamo was not the result when calling pathFor with lang = it option');
 
-    test.equal(pathFor('about', {hash: {lang: 'es'}}), '/es/quienes-somos', '/es/quienes-somos was not the result when calling pathFor with lang = es option');
+    test.equal(pathFor('about', {hash: {lang: 'en'}}), '/en/about', '/en/about was not the result when calling pathFor with lang = es option');
 
 
     var urlFor = Blaze._globalHelpers['urlFor'];
@@ -44,11 +44,11 @@ Tinytest.add('Router i18n - test helpers', function (test) {
 
     test.equal(urlFor('test-i18n', {hash: {lang: 'it'}}), 'http://localhost:3000/it/test-i18n', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
 
-    test.equal(urlFor('about', {}), 'http://localhost:3000/es/about', 'http://localhost:3000/es/about was not the result when calling pathFor with empty options.');
+    test.equal(urlFor('about', {}), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/es/quienes-somos was not the result when calling pathFor with empty options.');
 
-    test.equal(urlFor('about', {hash: {lang: 'it'}}), 'http://localhost:3000/it/chi-siamo', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
+    test.equal(urlFor('about', {hash: {lang: 'it'}}), 'http://localhost:3000/it/chi-siamo', 'http://localhost:3000/it/chi-siamo was not the result when calling pathFor with lang = it option');
 
-    test.equal(urlFor('about', {hash: {lang: 'es'}}), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = es option');
+    test.equal(urlFor('about', {hash: {lang: 'en'}}), 'http://localhost:3000/en/about', 'http://localhost:3000/en/about was not the result when calling pathFor with lang = es option');
 
 });
 
