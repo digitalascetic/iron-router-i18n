@@ -177,15 +177,15 @@ Tinytest.add('Router i18n - test i18n route configuration (legacy)', function (t
 
         });
 
-    test.isFalse(_.isUndefined(router.routes['about']), 'Route name "about" was not found.');
+    test.isFalse(_.isUndefined(router.routes['about']), 'Route name "en.about" was not found.');
     test.equal(router.routes['about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
 
-    test.isFalse(_.isUndefined(router.routes['about_it']), 'Route "chi-siamo" does not exists.');
-    test.equal(router.routes['about_it'].options.layoutTemplate, 'base_layout', 'Base layout of route "chi-siamo" is not inherited as "base_layout".');
-    test.equal(router.routes['about_it'].options.template, 'about_it_template', 'Template for route "chi-siamo" is not overridden "about_it_template"');
+    test.isFalse(_.isUndefined(router.routes['about_it']), 'Route "about_it" does not exists.');
+    test.equal(router.routes['about_it'].options.layoutTemplate, 'base_layout', 'Base layout of route "about_it" is not inherited as "base_layout".');
+    test.equal(router.routes['about_it'].options.template, 'about_it_template', 'Template for route "about_it" is not overridden "about_it_template"');
 
-    test.isFalse(_.isUndefined(router.routes['quienes-somos']), 'Route "quienes-somos" does not exists.');
-    test.equal(router.routes['quienes-somos'].options.layoutTemplate, 'es_layout', 'Base layout of route "quienes-somos" is not overridden as "es_layout".');
+    test.isFalse(_.isUndefined(router.routes['es.quienes-somos']), 'Route "es.quienes-somos" does not exists.');
+    test.equal(router.routes['es.quienes-somos'].options.layoutTemplate, 'es_layout', 'Base layout of route "es.quienes-somos" is not overridden as "es_layout".');
 
 });
 
@@ -218,15 +218,15 @@ Tinytest.add('Router i18n - test i18n route configuration (new)', function (test
 
         });
 
-    test.isFalse(_.isUndefined(router.routes['about']), 'Route name "about" was not found.');
-    test.equal(router.routes['about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
+    test.isFalse(_.isUndefined(router.routes['en.about']), 'Route name "en.about" was not found.');
+    test.equal(router.routes['en.about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
 
-    test.isFalse(_.isUndefined(router.routes['chi-siamo']), 'Route "chi-siamo" does not exists.');
-    test.equal(router.routes['chi-siamo'].options.layoutTemplate, 'base_layout', 'Base layout of route "chi-siamo" is not inherited as "base_layout".');
-    test.equal(router.routes['chi-siamo'].options.template, 'about_it_template', 'Template for route "chi-siamo" is not overridden "about_it_template"');
+    test.isFalse(_.isUndefined(router.routes['it.chi-siamo']), 'Route "chi-siamo" does not exists.');
+    test.equal(router.routes['it.chi-siamo'].options.layoutTemplate, 'base_layout', 'Base layout of route "chi-siamo" is not inherited as "base_layout".');
+    test.equal(router.routes['it.chi-siamo'].options.template, 'about_it_template', 'Template for route "chi-siamo" is not overridden "about_it_template"');
 
-    test.isFalse(_.isUndefined(router.routes['quienes-somos']), 'Route "quienes-somos" does not exists.');
-    test.equal(router.routes['quienes-somos'].options.layoutTemplate, 'es_layout', 'Base layout of route "quienes-somos" is not overridden as "es_layout".');
+    test.isFalse(_.isUndefined(router.routes['es.quienes-somos']), 'Route "quienes-somos" does not exists.');
+    test.equal(router.routes['es.quienes-somos'].options.layoutTemplate, 'es_layout', 'Base layout of route "quienes-somos" is not overridden as "es_layout".');
 
 });
 
@@ -278,23 +278,23 @@ function testDefaultLanguagePrefix(test, env) {
 
     var req = {url: '/es/test-i18n'};
     router(req, res, next);
-    test.isTrue(testRouteMatched, '/test-i18n route not matched for /es/test-i18n');
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /es/test-i18n');
     resetRouter();
 
-    req = {url: '/test-i18n'};
+    req = {url: '/en/test-i18n'};
     router(req, res, next);
-    test.isTrue(testRouteMatched, '/test-i18n route not matched for /test-i18n');
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /test-i18n');
     resetRouter();
 
     req = {url: '/it/test-i18n'};
     router(req, res, next);
-    test.isTrue(testRouteMatched, '/test-i18n route not matched for /it/test-i18n');
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /it/test-i18n');
     resetRouter();
 
     // Lang code missing
     req = {url: '/test-i18n'};
     router(req, res, next);
-    test.isTrue(missingLangCodeAction, '/test-i18n: missingLangCodeAction not called on route without lang code');
+    test.isTrue(missingLangCodeAction, '"test-i18n": missingLangCodeAction not called on route without lang code');
 
 }
 
@@ -406,19 +406,19 @@ function testCustomPath(test, env) {
     var next = function () {
     };
 
-    var req = {url: '/about'};
+    var req = {url: '/en/about'};
     router(req, res, next);
-    test.isTrue(testRouteMatchedEN, 'en about route not matched for /about');
+    test.isTrue(testRouteMatchedEN, 'en.about route not matched for /en/about');
     resetVars();
 
     var req = {url: '/it/chi-siamo'};
     router(req, res, next);
-    test.isTrue(testRouteMatchedIT, 'about_it route not matched for /it/chi-siamo');
+    test.isTrue(testRouteMatchedIT, 'it.chi-siamo route not matched for /it/chi-siamo');
     resetVars();
 
-    var req = {url: '/quienes-somos'};
+    var req = {url: '/es/quienes-somos'};
     router(req, res, next);
-    test.isTrue(testRouteMatchedES, 'about_es route not matched for /quienes-somos');
+    test.isTrue(testRouteMatchedES, 'es.quienes-somos route not matched for /es/quienes-somos');
     resetVars();
 
     /*
@@ -428,12 +428,12 @@ function testCustomPath(test, env) {
      */
 
     // Test mixed prefix/custom i18n path routes
-    var req = {url: '/contact'};
+    var req = {url: '/en/contact'};
     router(req, res, next);
     test.isTrue(testRouteMatchedEN, 'en contact route not matched for /contact');
     resetVars();
 
-    var req = {url: '/contatto'};
+    var req = {url: '/it/contatto'};
     router(req, res, next);
     test.isTrue(testRouteMatchedIT, 'it route not matched for /contatto');
     resetVars();
@@ -447,7 +447,7 @@ function testCustomPath(test, env) {
 
     // Test mixed custom i18n path routes with parameters
 
-    var req = {url: '/post/34'};
+    var req = {url: '/en/post/34'};
     router(req, res, next);
     test.isTrue(testRouteMatchedEN, 'contact route not matched for /en/post/34');
     test.equal(postId, "34", 'Post id not identified as "34" for /en/post/34');
@@ -513,7 +513,7 @@ function testLangVaryingConfiguration(test, env) {
     test.isFalse(differentAction, '"/it/test-i18n" route matched for /es/test-i18n');
     resetRouter();
 
-    req = {url: '/test-i18n'};
+    req = {url: '/en/test-i18n'};
     router(req, res, next);
     test.isTrue(testRouteMatched, '"test-i18n" route not matched for /en/test-i18n');
     test.isFalse(differentAction, '"/it/test-i18n" route matched for /en/test-i18n');
