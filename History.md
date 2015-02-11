@@ -3,12 +3,12 @@
 * **BREAKING CHANGE** Iron Router 1.0.x compatibility (#19). Default configuration tries to retain as much as
 possible 0.4.x behaviour and configuration methods. It supports all new Iron Router features and configuration
 methods.
-* **BREAKING CHANGE** Introduced `compulsoryLangCode` configuration parameter if set to true makes language
+* **BREAKING CHANGE** Removed `rewritePath` (use `addLangCode` instead).
+* Introduced `compulsoryLangCode` configuration parameter if set to true makes language
 code compulsory on urls, if any language code is missing from the url  `missingLangCodeAction` function will be called.
 Default value is `true`.
-* **BREAKING CHANGE** Introduced `addLangCode` configuration parameter: if defined this function is used to
+* Introduced `addLangCode` configuration parameter: if defined this function is used to
 add the language code to the passed url. Default implementation add prefix lang code e.g. `/test` -> `/es/test`
-* **BREAKING CHANGE** Removed `rewritePath` (use `addLangCode` instead).
 * Added `Router.getLanguageDep()` to change reactively on router language change.
 * Added `linkTo` helper.
 * Added many tests and improved test system.
