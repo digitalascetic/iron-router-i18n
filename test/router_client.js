@@ -29,6 +29,8 @@ Tinytest.add('Router i18n - test helpers', function (test) {
 
     test.equal(pathFor('test-i18n', {}), '/en/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
 
+    test.equal(pathFor({hash: {route: 'test-i18n'}}), '/en/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
+
     test.equal(pathFor('test-i18n', {hash: {lang: 'it'}}), '/it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
 
     test.equal(pathFor('about'), '/en/about', '/en/about was not the result when calling pathFor with empty options.');
@@ -41,6 +43,8 @@ Tinytest.add('Router i18n - test helpers', function (test) {
     var urlFor = Blaze._globalHelpers['urlFor'];
 
     test.equal(urlFor('test-i18n', {}), 'http://localhost:3000/en/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
+
+    test.equal(urlFor({hash: {route: 'test-i18n'}}), 'http://localhost:3000/en/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
 
     test.equal(urlFor('test-i18n', {hash: {lang: 'it'}}), 'http://localhost:3000/it/test-i18n', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
 
