@@ -576,6 +576,51 @@ function testRootRoute(test, env) {
 
 }
 
+function testEdgeCases(test, env) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    var testRouteMatched = false;
+
+    var resetRouter = function () {
+        testRouteMatched = false;
+    }
+
+    // Strange case in which the route is configured both with path option and '/login' path name
+    router.route('/login',
+        {
+
+            name: 'login',
+            path: '/login',
+            action: function () {
+                testRouteMatched = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    var res = {
+        setHeader: function () {
+        },
+        end: function () {
+        }
+    };
+    var next = function () {
+    };
+
+    var req = {url: '/en/login'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"login" route not matched for /en/login');
+    resetRouter();
+
+}
+
+
+
 function testRouteWithFN(test, env) {
 
     var router = initRouter();
@@ -670,6 +715,14 @@ if (Meteor.isClient) {
 
     });
 
+    Tinytest.add('Router i18n - test edge cases', function (test) {
+
+        testEdgeCases(test, 'client');
+
+    });
+
+
+
 }
 
 
@@ -703,6 +756,12 @@ if (Meteor.isServer) {
     Tinytest.add('Router i18n - test route with fn', function (test) {
 
         testRouteWithFN(test, 'server');
+
+    });
+
+    Tinytest.add('Router i18n - test edge cases', function (test) {
+
+        testEdgeCases(test, 'server');
 
     });
 
