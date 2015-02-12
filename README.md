@@ -314,19 +314,8 @@ Gets the default language the router is using (see `defaultLanguage` property an
 
 #### Router.getLanguageDep()
 
-Returns language dependency, can be used to change reactively on router language change, e.g.
+Returns language dependency, can be used to change reactively on router language change.
 
-```javascript
-Template.layout.helpers({
-    currentLanguage: function () {
-        Router.getLanguageDep().depend();
-        return Router.getLanguage();
-    }
-});
-```
-
-will reactively change currentLanguage variable on router language change (e.g. going to a different lang code route or calling
-`Router.setLanguage`)
 
 ### Helpers
 
