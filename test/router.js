@@ -603,6 +603,20 @@ function testEdgeCases(test, env) {
         }
     );
 
+
+    // Test legacy map configuration
+    router.map(function () {
+            this.route('/routemap',
+                {
+                    action: function () {
+                        testRouteMatched = true;
+                    },
+
+                    where: env
+                });
+        }
+    );
+
     var res = {
         setHeader: function () {
         },
@@ -617,8 +631,22 @@ function testEdgeCases(test, env) {
     test.isTrue(testRouteMatched, '"login" route not matched for /en/login');
     resetRouter();
 
-}
+    var req = {url: '/en/routemap'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"routemap" route not matched for /en/routemap');
+    resetRouter();
 
+    var req = {url: '/it/routemap'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"routemap" route not matched for /it/routemap');
+    resetRouter();
+
+    var req = {url: '/es/routemap'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"routemap" route not matched for /es/routemap');
+
+
+}
 
 
 function testRouteWithFN(test, env) {
@@ -720,7 +748,6 @@ if (Meteor.isClient) {
         testEdgeCases(test, 'client');
 
     });
-
 
 
 }
