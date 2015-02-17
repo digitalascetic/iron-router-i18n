@@ -20,13 +20,13 @@ Package.onUse(function (api) {
 
     Npm.depends({locale: "0.0.20"});
 
-    api.add_files('lib/router.js', ['client', 'server']);
-    api.add_files('lib/router_client.js', ['client']);
-    api.add_files('lib/router_server.js', ['server']);
-    api.add_files('lib/route.js', ['client', 'server']);
-    api.add_files('lib/router_controller_client.js', ['client']);
-    api.add_files('lib/helpers.js', ['client']);
-    api.add_files('lib/global.js', ['client', 'server']);
+    api.addFiles('lib/router.js', ['client', 'server']);
+    api.addFiles('lib/router_client.js', ['client']);
+    api.addFiles('lib/router_server.js', ['server']);
+    api.addFiles('lib/route.js', ['client', 'server']);
+    api.addFiles('lib/router_controller_client.js', ['client']);
+    api.addFiles('lib/helpers.js', ['client']);
+    api.addFiles('lib/global.js', ['client', 'server']);
 
     api.export('Router', ['client', 'server']);
     api.export('I18NRouter', ['client', 'server']);
@@ -44,8 +44,8 @@ Package.onTest(function (api) {
     api.use('tinytest', ['client', 'server']);
     api.use('test-helpers', ['client', 'server']);
 
-    api.add_files('test/common.js', ['client', 'server']);
-    api.add_files('test/router.js', ['client', 'server']);
-    api.add_files('test/router_client.js', ['client']);
+    api.addFiles('test/common.js', ['client', 'server']);
+    api.addFiles('test/router.js', ['client', 'server']);
+    api.addFiles('test/router_client.js', ['client']);
 
 });
