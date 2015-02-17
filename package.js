@@ -5,7 +5,7 @@ Package.describe({
     version: '0.5.0'
 });
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
 
     api.versionsFrom("METEOR@1.0");
 
@@ -33,7 +33,7 @@ Package.on_use(function (api) {
 
 });
 
-Package.on_test(function (api) {
+Package.onTest(function (api) {
 
     api.use('reactive-dict@1.0.5', ['client', 'server']);
     api.use('tracker@1.0.5', ['client', 'server']);
