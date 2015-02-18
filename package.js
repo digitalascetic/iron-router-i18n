@@ -1,13 +1,15 @@
+Npm.depends({locale: "0.0.20"});
+
 Package.describe({
     summary: 'Iron Router support for i18n',
     git: "https://github.com/yoolab/iron-router-i18n.git",
     name: "martino:iron-router-i18n",
-    version: '0.5.0'
+    version: '0.5.1'
 });
 
 Package.onUse(function (api) {
 
-    api.versionsFrom("METEOR@1.0");
+    api.versionsFrom("1.0");
 
     api.use('reactive-dict@1.0.5', ['client', 'server']);
     api.use('tracker@1.0.5', ['client', 'server']);
@@ -17,8 +19,6 @@ Package.onUse(function (api) {
 
     // for helpers
     api.use('blaze', 'client');
-
-    Npm.depends({locale: "0.0.20"});
 
     api.addFiles('lib/router.js', ['client', 'server']);
     api.addFiles('lib/router_client.js', ['client']);
@@ -40,7 +40,7 @@ Package.onTest(function (api) {
     api.use('underscore@1.0.2', ['client', 'server']);
 
     api.use("iron:router@1.0.0", ['client', 'server']);
-    api.use("martino:iron-router-i18n@0.5.0", ['client', 'server']);
+    api.use("martino:iron-router-i18n@0.5.1", ['client', 'server']);
     api.use('tinytest', ['client', 'server']);
     api.use('test-helpers', ['client', 'server']);
 

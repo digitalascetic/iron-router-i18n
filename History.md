@@ -1,3 +1,8 @@
+## v0.5.1
+
+* Fixed #29 (previous version was mistakenly deployed and published without needed dependency and code).
+
+
 ## v0.5.0
 
 * **BREAKING CHANGE** Iron Router 1.0.x compatibility (#19). Default configuration tries to retain as much as
