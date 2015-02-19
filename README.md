@@ -259,6 +259,11 @@ Retrieves the current language the router is using.
 Gets the default language the router is using (see `defaultLanguage` property and `getDefaultLanguage` hook)
 
 
+#### Router.initalLangCodeMissing
+
+This property is only set and returns true if initial page load has no language code and missingLangCode() needs to run.
+
+
 ### Helpers
 
 #### pathFor
