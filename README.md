@@ -2,17 +2,10 @@
 
 Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/iron-router) package.
 
-## Support for Iron Router 1.0
-
-Support for Iron Router 1.0 is planned for the second half of February 2015 (thanks for the patience :-) ).
-
-**Iron Router i18n works with Iron Router 0.9.x. Forthcoming 0.5 version will support new Iron Router 1.0.**
-
-**Follow https://github.com/yoolab/iron-router-i18n/issues/19 for updates on 0.5 version**
 
 ## History
 
-**Latest Version:** 0.4.3
+**Latest Version:** 0.5.1
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -27,18 +20,20 @@ Iron Router i18n adds support for i18n routes to Iron Router package for Meteor.
 * i18n system agnostic. It can be easily integrated with any existing i18n package (or at least it aims to).
 Currently used with [TAPi18n](http://atmospherejs.com/package/tap-i18n) on an internal project.
 * Switch language when a route is called with a language code in it. E.g.: `http://example.com/it/test` 
-will change the language to italian and map to ``http://example.com/test`` while `http://example.com/en/test` will 
-change the language to english but still map to `http://example.com/test`. 
+will change the language to italian while `http://example.com/en/test` will change the language to english.
+* Define multiple language routes with a single configuration, share or override single configuration parameters
+of each route.
 * Redirect/switch to a language-aware route when the language code is missing from the url. E.g. it can automatically 
 switch from `http://example.com/test` to `http://example.com/en/test` if current language is english.
-* Configurable: default strategies provide all above mentioned features: lang code extraction, language switching, 
-redirect and path rewrite but each of these is overridable on Router configuration by a custom strategy so that 
-e.g. one can support different behaviour on missing lang code (e.g. not redirect but directly serve default language) 
+* Configurable: url language code extraction, language switching on missing code, url language code strategy
+e.g. one can support different behaviour on missing lang code (e.g. not redirect but serve default language content)
 or use different language aware url schema e.g. `http://example.com/test.it` instead of `http://example.com/it/test`.
-* Provides reactive `pathFor` `urlFor` helpers that change reactively on router language change.
-* Provides custom language alias path (see https://github.com/EventedMind/iron-router/issues/656).
-* Provide default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
-* Provide server side behaviour, e.g. use a 301 redirect to lang code path when calling a 
+* Many configuration options adapting to different cases.
+* Reactive `pathFor`, `urlFor`, `linkTo` helpers that update reactively on router language change.
+* Custom language alias path, possibility to use custom language alias path instead of default schemas
+ (see https://github.com/EventedMind/iron-router/issues/656). E.g. `/quienes-somos` as a path for spanish `about`.
+* Default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
+* Server side behaviour, e.g. use a 301 redirect to url with language code when calling a server route.
 
 
 
@@ -54,10 +49,7 @@ $ meteor add martino:iron-router-i18n
 
 ### Basic configuration
 
-Basic configuration for the moment requires that at least `languages` configuration property methods be defined on
-Router i18n configuration options.
-
-Here below a very basic example using TAPi18n (all iron-router-i18n configuration options are within the i18n option
+Here below a very basic example configuring the Router for three languages (all iron-router-i18n configuration options are within the i18n option
 namespace):
 
 ```javascript
@@ -84,36 +76,88 @@ override other default route options in addition to `path`.
  
 ```javascript
 
-Router.map(function () {
-
-     ...
-
-     this.route('about', {
+     Router.route('about', {
          path: '/about',
          template: 'about',
          i18n: {
              languages: {
                  it: {
                      path: '/chi-siamo',
-                     template: 'about-it',
-                 },
-                 es: {
-                     path: '/quienes-somos'
+                     template: 'about_it',
                  }
              }
          }
  
      });
-     
-     ...
+
      
 ```
+
+or, with new Iron Router 1.0.x
+
+```javascript
+
+     Router.route('/about', {
+
+         template: 'about',
+
+         i18n: {
+             languages: {
+                 it: {
+                     path: '/chi-siamo',
+                     template: 'about_it',
+                 }
+             }
+         }
+
+     });
+
+
+```
+
+or
+
+```javascript
+
+     Router.route('/about', function() {
+
+        var lang = this.getLanguage();
+
+        if (lang == 'it') {
+            this.render('about_it');
+        } else {
+            this.render('about');
+        }
+
+     },
+
+     {
+
+         i18n: {
+             languages: {
+                 it: {
+                     path: '/chi-siamo',
+                 }
+             }
+         }
+
+     });
+
+
+```
+
+Given the router configuration above both configurations will create 3 routes:
+
+* `/en/about/` the "default language" route with template "about"
+* `/it/chi-siamo/` the custom path route with template "about_it"
+* `/es/about/` the es route with template "about"
+
 
 ### Configuration options
 
 #### languages
 
-**REQUIRED**: Array that specify the supported languages, use it to identify url fragments that can be considered language codes.
+Array that specify the supported languages, use it to identify url fragments that can be considered language codes (defaults to `['en']`)
 
 E.g.
 
@@ -134,17 +178,22 @@ Router.configure({
 
 #### defaultLanguage
 
-Set the default language for Iron Router i18n (defaults to 'en').
+Set the default language for Iron Router i18n (defaults to `'en'`).
 
 #### autoConfLanguage
 
 If set to true Iron Router i18n will try to autodetect the best language to use for current browser/request (defaults to false).
 
-### serverSide (just server)
+#### compulsoryLangCode
+
+If set to true the router will consider compulsory for a route path to have a language code (e.g. `/en/about`) if the language code
+is not found (through `getLangCode` function) `missingLangCodeAction` function will be called (default to true).
+
+#### serverSide (just server)
 
 Enable (true) or disable (false) server side functionality (default: false).
 
-### redirectCode (just server)
+#### redirectCode (just server)
 
 The redirect code to use when redirecting when the lang code is missing from path (default: 301)
 
@@ -155,7 +204,18 @@ Provides a method to return the default "fallback" language for Iron Router i18n
  used when no current language is defined with `Router.setLanguage` or by using `autoConfLanguage`.
 (default implementation just returns defaultLanguage property which default to "en"). 
 
-#### getLangCode(path, options)
+#### addLangCode(url)
+
+If set will be used to add the language code to a route path which is missing one. Default implementation will add
+ the language code as a prefix to the path. E.g. the route
+
+```javascript
+     Router.route('/about');
+```
+with the default implementation will generate three routes with path: `/en/about`, `/es/about`, `/it/about`.
+
+
+#### getLangCode(path)
 
 Given the path returns the language code (or null if no language code is found in the path).
 Default implementation return the language prefix, e.g. for path `/de/about` will return "de".
@@ -172,7 +232,7 @@ Router.configure({
 
         ...
         
-        getLangCode: function(path, options) {
+        getLangCode: function(path) {
           ...
         }
 
@@ -182,7 +242,7 @@ Router.configure({
 
 #### getLanguage(lang)
 
-Called by `Router.getLanguage` to retrieve current language. Default implementaion just use a local property.
+Called by `Router.getLanguage` to retrieve current language. Default implementation just use a local property.
 
 
 #### setLanguage(lang)
@@ -210,7 +270,7 @@ Router.configure({
 });
 ```
 
-#### missingLangCodeAction(path, options)
+#### missingLangCodeAction(path)
 
 Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path
 based on the current configured language). E.g. when receiving a request for `/about` and the current language is "en"
@@ -218,16 +278,10 @@ it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en
 request dispatch will return immediately after this method execution, otherwise it will continue normally.
 
 
-#### langCodeAction(path, options)
+#### langCodeAction(path)
 
 Action to be taken when a language code is found by `getLangCode`. Default is using `Router.setLanguage` to set the language.
 E.g. when `/es/about` is called and the current language is not spanish, the current language will be switched to spanish.
-
-
-#### rewritePath(path, options)
-
-Called after ``langCodeAction`` it gives the option to rewrite the path before dispatching it through Iron Router.
-Default strategy is to strip language code so that the path can match language agnostic routes.
 
 
 #### setLangCode(lang)
@@ -258,6 +312,10 @@ Retrieves the current language the router is using.
 
 Gets the default language the router is using (see `defaultLanguage` property and `getDefaultLanguage` hook)
 
+#### Router.getLanguageDep()
+
+Returns language dependency, can be used to change reactively on router language change.
+
 
 #### Router.initalLangCodeMissing
 
@@ -267,6 +325,7 @@ This property is only set and returns true if initial page load has no language 
 ### Helpers
 
 #### pathFor
+
 Overrides iron:router pathFor helper making it reactive on router language change and adds the "lang" parameter 
 to force language for path. 
 
@@ -278,7 +337,11 @@ will always show route `'items'` for language `it`.
 
 #### urlFor
 
-The same as `pathFor` for gives absolute URL.
+The same as `pathFor` but returning absolute URL.
+
+#### linkTo
+
+The same as `pathFor` but returning a links.
 
 ## License
 

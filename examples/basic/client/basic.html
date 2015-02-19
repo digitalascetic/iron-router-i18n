@@ -1,0 +1,53 @@
+<template name="layout">
+    <head>
+        <title>Iron Router i18n - Basic Sample</title>
+    </head>
+    <body>
+    <header>
+        <ul class="langMenu">
+            <li><a id="en" href="#">EN</a></li>
+            <li><a id="es" href="#">ES</a></li>
+            <li><a id="it" href="#">IT</a></li>
+            <li><strong>Current language: </strong>{{ currentLanguage }}</li>
+        </ul>
+    </header>
+    {{> yield}}
+    </body>
+
+</template>
+
+<template name="Home">
+    {{> Nav}}
+
+    <h1>Home</h1>
+
+    <p>
+        Data Title: {{title}}
+    </p>
+</template>
+
+<template name="One">
+    {{> Nav}}
+
+    <h1>Page One</h1>
+</template>
+
+<template name="Two">
+    {{> Nav}}
+
+    <h1>Page Two</h1>
+</template>
+
+<template name="Nav">
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <a href="{{pathFor 'one'}}">Page One</a>
+        </li>
+        <li>
+            <a href="{{pathFor 'two'}}">Page Two</a>
+        </li>
+    </ul>
+</template>

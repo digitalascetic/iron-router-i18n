@@ -1,45 +1,51 @@
+Npm.depends({locale: "0.0.20"});
+
 Package.describe({
     summary: 'Iron Router support for i18n',
     git: "https://github.com/yoolab/iron-router-i18n.git",
     name: "martino:iron-router-i18n",
-    version: '0.4.3'
+    version: '0.5.1'
 });
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
 
-    api.versionsFrom("METEOR@0.9.0");
+    api.versionsFrom("1.0");
 
-    api.use('reactive-dict', ['client', 'server']);
-    api.use('deps', ['client', 'server']);
-    api.use('underscore', ['client', 'server']);
+    api.use('reactive-dict@1.0.5', ['client', 'server']);
+    api.use('tracker@1.0.5', ['client', 'server']);
+    api.use('underscore@1.0.2', ['client', 'server']);
 
-    api.use("iron:router@0.9.1", ['client', 'server']);
+    api.use("iron:router@1.0.0", ['client', 'server']);
 
     // for helpers
-    api.use('ui', 'client');
+    api.use('blaze', 'client');
 
-    Npm.depends({locale: "0.0.20"});
-
-    api.add_files('lib/router.js', ['client', 'server']);
-    api.add_files('lib/client/router.js', ['client']);
-    api.add_files('lib/server/router.js', ['server']);
-    api.add_files('lib/route.js', ['client', 'server']);
-    api.add_files('lib/client/ui/helpers.js', ['client']);
+    api.addFiles('lib/router.js', ['client', 'server']);
+    api.addFiles('lib/router_client.js', ['client']);
+    api.addFiles('lib/router_server.js', ['server']);
+    api.addFiles('lib/route.js', ['client', 'server']);
+    api.addFiles('lib/router_controller_client.js', ['client']);
+    api.addFiles('lib/helpers.js', ['client']);
+    api.addFiles('lib/global.js', ['client', 'server']);
 
     api.export('Router', ['client', 'server']);
+    api.export('I18NRouter', ['client', 'server']);
 
 });
 
-Package.on_test(function (api) {
+Package.onTest(function (api) {
 
-    api.use('underscore', ['client', 'server']);
-    api.use('iron:router', ['client', 'server']);
-    api.use("martino:iron-router-i18n", ['client', 'server']);
+    api.use('reactive-dict@1.0.5', ['client', 'server']);
+    api.use('tracker@1.0.5', ['client', 'server']);
+    api.use('underscore@1.0.2', ['client', 'server']);
+
+    api.use("iron:router@1.0.0", ['client', 'server']);
+    api.use("martino:iron-router-i18n@0.5.1", ['client', 'server']);
     api.use('tinytest', ['client', 'server']);
     api.use('test-helpers', ['client', 'server']);
-    api.use('reactive-dict', ['client', 'server']);
 
-    api.add_files('test/init.js', ['client', 'server']);
-    api.add_files('test/router.js', ['client', 'server']);
+    api.addFiles('test/common.js', ['client', 'server']);
+    api.addFiles('test/router.js', ['client', 'server']);
+    api.addFiles('test/router_client.js', ['client']);
 
 });
