@@ -1,0 +1,11 @@
+.langMenu {
+    list-style-type: none;
+}
+
+.langMenu li {
+    display: inline;
+}
+
+.active {
+    background-color: crimson;
+}
