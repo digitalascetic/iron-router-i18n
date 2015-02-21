@@ -317,6 +317,11 @@ Gets the default language the router is using (see `defaultLanguage` property an
 Returns language dependency, can be used to change reactively on router language change.
 
 
+#### Router.initalLangCodeMissing
+
+This property is only set and returns true if initial page load has no language code and missingLangCode() needs to run.
+
+
 ### Helpers
 
 #### pathFor
