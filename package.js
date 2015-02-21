@@ -9,7 +9,7 @@ Package.describe({
 
 Package.onUse(function (api) {
 
-    api.versionsFrom("1.0");
+    api.versionsFrom('1.0');
 
     api.use('reactive-dict@1.0.5', ['client', 'server']);
     api.use('tracker@1.0.5', ['client', 'server']);
@@ -29,7 +29,7 @@ Package.onUse(function (api) {
     api.addFiles('lib/global.js', ['client', 'server']);
 
     api.export('Router', ['client', 'server']);
-    api.export('I18NRouter', ['client', 'server']);
+    //api.export('I18NRouter', ['client', 'server']);
 
 });
 

@@ -13,7 +13,7 @@ Tinytest.add('Router i18n - test i18n Router configuration', function (test) {
         i18n: {
             defaultLanguage: 'es'
         }
-    })
+    });
 
     // Test configured options
     test.equal(router.options.i18n.defaultLanguage, 'es', 'Default language for client is not "es".');
@@ -99,9 +99,9 @@ Tinytest.add('Router i18n - test Router language methods', function (test) {
 
     router.configure({
         i18n: {}
-    })
+    });
 
-    test.equal(router.getDefaultLanguage(), 'en', 'Router default language is not "en".')
+    test.equal(router.getDefaultLanguage(), 'en', 'Router default language is not "en".');
 
     router = initRouter();
 
@@ -254,7 +254,7 @@ function testDefaultLanguagePrefix(test, env) {
 
     var resetRouter = function () {
         testRouteMatched = false;
-    }
+    };
 
     router.route('/test-i18n',
         {
@@ -298,7 +298,6 @@ function testDefaultLanguagePrefix(test, env) {
 
 }
 
-
 function testCustomPath(test, env) {
 
     var testRouteMatchedEN = false;
@@ -317,7 +316,7 @@ function testCustomPath(test, env) {
         testRouteMatchedES = false;
         testRouteMatchedIT = false;
         postId = null;
-    }
+    };
 
     router.route('/about',
         {
@@ -411,12 +410,12 @@ function testCustomPath(test, env) {
     test.isTrue(testRouteMatchedEN, 'en.about route not matched for /en/about');
     resetVars();
 
-    var req = {url: '/it/chi-siamo'};
+    req = {url: '/it/chi-siamo'};
     router(req, res, next);
     test.isTrue(testRouteMatchedIT, 'it.chi-siamo route not matched for /it/chi-siamo');
     resetVars();
 
-    var req = {url: '/es/quienes-somos'};
+    req = {url: '/es/quienes-somos'};
     router(req, res, next);
     test.isTrue(testRouteMatchedES, 'es.quienes-somos route not matched for /es/quienes-somos');
     resetVars();
@@ -428,17 +427,17 @@ function testCustomPath(test, env) {
      */
 
     // Test mixed prefix/custom i18n path routes
-    var req = {url: '/en/contact'};
+    req = {url: '/en/contact'};
     router(req, res, next);
     test.isTrue(testRouteMatchedEN, 'en contact route not matched for /contact');
     resetVars();
 
-    var req = {url: '/it/contatto'};
+    req = {url: '/it/contatto'};
     router(req, res, next);
     test.isTrue(testRouteMatchedIT, 'it route not matched for /contatto');
     resetVars();
 
-    var req = {url: '/es/contact'};
+    req = {url: '/es/contact'};
     router(req, res, next);
     test.isTrue(testRouteMatchedEN, 'es route not matched for /es/contact');
     test.equal(router.getLanguage(), 'es', '"es" not set as language for route /es/contact');
@@ -447,13 +446,13 @@ function testCustomPath(test, env) {
 
     // Test mixed custom i18n path routes with parameters
 
-    var req = {url: '/en/post/34'};
+    req = {url: '/en/post/34'};
     router(req, res, next);
     test.isTrue(testRouteMatchedEN, 'contact route not matched for /en/post/34');
     test.equal(postId, "34", 'Post id not identified as "34" for /en/post/34');
     resetVars();
 
-    var req = {url: '/it/articolo/34'};
+    req = {url: '/it/articolo/34'};
     router(req, res, next);
     test.isTrue(testRouteMatchedIT, 'contact route not matched for /it/articolo/34');
     test.equal(postId, "34", 'Post id not identified as "34" for /it/articolo/34');
@@ -475,7 +474,7 @@ function testLangVaryingConfiguration(test, env) {
     var resetRouter = function () {
         testRouteMatched = false;
         differentAction = false;
-    }
+    };
 
     router.route('/test-i18n',
         {
@@ -537,7 +536,7 @@ function testRootRoute(test, env) {
 
     var resetRouter = function () {
         testRouteMatched = false;
-    }
+    };
 
     router.route('/',
         {
@@ -586,7 +585,7 @@ function testEdgeCases(test, env) {
 
     var resetRouter = function () {
         testRouteMatched = false;
-    }
+    };
 
     // Strange case in which the route is configured both with path option and '/login' path name
     router.route('/login',
@@ -631,17 +630,17 @@ function testEdgeCases(test, env) {
     test.isTrue(testRouteMatched, '"login" route not matched for /en/login');
     resetRouter();
 
-    var req = {url: '/en/routemap'};
+    req = {url: '/en/routemap'};
     router(req, res, next);
     test.isTrue(testRouteMatched, '"routemap" route not matched for /en/routemap');
     resetRouter();
 
-    var req = {url: '/it/routemap'};
+    req = {url: '/it/routemap'};
     router(req, res, next);
     test.isTrue(testRouteMatched, '"routemap" route not matched for /it/routemap');
     resetRouter();
 
-    var req = {url: '/es/routemap'};
+    req = {url: '/es/routemap'};
     router(req, res, next);
     test.isTrue(testRouteMatched, '"routemap" route not matched for /es/routemap');
 
@@ -661,7 +660,7 @@ function testRouteWithFN(test, env) {
     var resetRouter = function () {
         testRouteMatched = false;
         testRouteMatchedIT = false;
-    }
+    };
 
     router.route('/test', function () {
         testRouteMatched = true;
@@ -679,7 +678,7 @@ function testRouteWithFN(test, env) {
 
         where: env
 
-    })
+    });
 
 
     var res = {
