@@ -26,10 +26,9 @@ Package.onUse(function (api) {
     api.addFiles('lib/route.js', ['client', 'server']);
     api.addFiles('lib/router_controller_client.js', ['client']);
     api.addFiles('lib/helpers.js', ['client']);
-    api.addFiles('lib/global.js', ['client', 'server']);
+    api.addFiles('lib/init.js', ['client', 'server']);
 
     api.export('Router', ['client', 'server']);
-    //api.export('I18NRouter', ['client', 'server']);
 
 });
 
