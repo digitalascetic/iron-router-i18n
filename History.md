@@ -1,3 +1,21 @@
+## v0.5.2
+
+Bug fixing and better compatibility with other Iron Router modules. Thanks to @dohomi and @mxab
+for continuous feedback.
+
+* Added ```Router.isLanguageSet``` method. Returns true if the language was explicitly set (i.e. if ```setLanguage```
+method was called at least once). Can be useful to know whether ```getLanguage``` is just returning the default language
+or a language explicitly set.
+* Added ```Router.getLangCode``` method to retrieve the current route language code (if any). It can also be used to know
+whether the route was called with a lang code to know whether to switch language (thanks @dohomi).
+* Improved Iron Router override method by overriding Router global object methods and Iron.Router prototype methods (#32)
+this should allow easy testing and better compatibility with other Iron Router modules.
+* Overridden ```Route.path``` to be language aware (so to also have language aware ```Router.path``` and ```Router.url```)
+* Fixed linkTo helper not working for missing DynamicTemplate in namespace (thanks @andreivolt)
+* Fixed #33 provide more coherent iron router i18n functionality with respect to behaviours using route name
+* Fixed #27 (but see also #32 for a more general approach )
+
+
 ## v0.5.1
 
 * Fixed #29 (previous version was mistakenly deployed and published without needed dependency and code).

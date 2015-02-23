@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.5.1
+**Latest Version:** 0.5.2
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -315,6 +315,17 @@ Gets the default language the router is using (see `defaultLanguage` property an
 #### Router.getLanguageDep()
 
 Returns language dependency, can be used to change reactively on router language change.
+
+#### Router.getLangCode()
+
+Returns the current route language code (if any), e.g. "en" for "en/about". It can also be used to know
+whether the route was called with a lang code in it or not to know whether to switch language.
+
+#### Router.isLanguageSet()
+
+Returns true if the language was explicitly set (i.e. if ```setLanguage```method was called at least once). Can be useful
+to know whether ```getLanguage``` is just returning the default language or a language explicitly set.
+
 
 
 ### Helpers
