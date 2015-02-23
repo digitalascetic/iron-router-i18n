@@ -3,6 +3,8 @@
 Bug fixing and better compatibility with other Iron Router modules. Thanks to @dohomi and @mxab
 for continuous feedback.
 
+* Added ```Route.getI18nName``` method to retrieve internal i18n name for route (```getName``` always return the name
+of the default route).
 * Added ```Router.isLanguageSet``` method. Returns true if the language was explicitly set (i.e. if ```setLanguage```
 method was called at least once). Can be useful to know whether ```getLanguage``` is just returning the default language
 or a language explicitly set.
