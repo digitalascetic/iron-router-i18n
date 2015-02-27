@@ -709,6 +709,166 @@ function testRouteWithFN(test, env) {
 }
 
 
+function testExclude(test, env) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    var missingLangCodeAction = false;
+
+    router.configure({
+        i18n: {
+
+            compulsoryLangCode: true,
+
+            missingLangCodeAction: function () {
+                missingLangCodeAction = true;
+            },
+
+            exclude: {
+
+                admin: "^\/admin",
+                pages: function(path) {
+                    // exclude any url which ends with ".admin"
+                    if (path.substr(-6) == '.admin') {
+                        return true;
+                    }
+                    return false;
+                }
+
+
+            }
+        }
+    });
+
+    var testRouteMatchedTesti18n = false;
+    var testRouteMatchedExcluded = false;
+    var testRouteMatchedAdmin = false;
+
+    var resetRouter = function () {
+        testRouteMatchedTesti18n = false;
+        testRouteMatchedExcluded = false;
+        testRouteMatchedAdmin = false;
+    };
+
+    router.route('/test-i18n',
+        {
+            action: function () {
+                testRouteMatchedTesti18n = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    router.route('/admin',
+        {
+            action: function () {
+                testRouteMatchedAdmin = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    router.route('/section/excluded.page.admin',
+        {
+            action: function () {
+                testRouteMatchedExcluded = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    router.route('/section/excluded.page2.admin',
+        {
+            action: function () {
+                testRouteMatchedExcluded = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    var res = {
+        setHeader: function () {
+        },
+        end: function () {
+        }
+    };
+    var next = function () {
+    };
+
+    var req = {url: '/es/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testRouteMatchedTesti18n, '"test-i18n" route not matched for /es/test-i18n');
+    resetRouter();
+
+    req = {url: '/en/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testRouteMatchedTesti18n, '"test-i18n" route not matched for /test-i18n');
+    resetRouter();
+
+    req = {url: '/it/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testRouteMatchedTesti18n, '"test-i18n" route not matched for /it/test-i18n');
+    resetRouter();
+
+    // Admin pages
+    req = {url: '/admin'};
+    router(req, res, next);
+    test.isTrue(testRouteMatchedAdmin, '"admin" route not matched for /admin');
+    resetRouter();
+
+
+    req = {url: '/en/admin'};
+    router(req, res, next);
+    test.isFalse(testRouteMatchedAdmin, '"admin" route matched for /en/admin');
+    resetRouter();
+
+    req = {url: '/it/admin'};
+    router(req, res, next);
+    test.isFalse(testRouteMatchedAdmin, '"admin" route matched for /it/admin');
+    resetRouter();
+
+    // Lang code missing
+    req = {url: '/es/admin'};
+    router(req, res, next);
+    test.isFalse(testRouteMatchedAdmin, '"admin" route matched on /es/admin');
+
+
+    // Excluded page
+    req = {url: '/section/excluded.page.admin'};
+    router(req, res, next);
+    test.isTrue(testRouteMatchedExcluded, '"/section/excluded.page.admin" route not matched for /section/excluded.page.admin');
+    resetRouter();
+
+
+    req = {url: '/en/section/excluded.page.admin'};
+    router(req, res, next);
+    test.isFalse(testRouteMatchedExcluded, '"/section/excluded.page.admin" route matched for /en/section/excluded.page.admin');
+    resetRouter();
+
+    req = {url: '/section/excluded.page2.admin'};
+    router(req, res, next);
+    test.isTrue(testRouteMatchedExcluded, '"/section/excluded.page2.admin" route not matched for /section/excluded.page2.admin');
+    resetRouter();
+
+    // Lang code missing
+    req = {url: '/es/section/excluded.page2.admin'};
+    router(req, res, next);
+    test.isFalse(testRouteMatchedExcluded, '"/section/excluded.page2.admin" route matched for /es/section/excluded.page2.admin');
+
+}
+
+
+
 if (Meteor.isClient) {
 
     Tinytest.add('Router i18n - test default language prefix strategy', function (test) {
@@ -745,6 +905,13 @@ if (Meteor.isClient) {
     Tinytest.add('Router i18n - test edge cases', function (test) {
 
         testEdgeCases(test, 'client');
+
+    });
+
+
+    Tinytest.add('Router i18n - test excluded', function (test) {
+
+        testExclude(test, 'client');
 
     });
 
@@ -788,6 +955,13 @@ if (Meteor.isServer) {
     Tinytest.add('Router i18n - test edge cases', function (test) {
 
         testEdgeCases(test, 'server');
+
+    });
+
+
+    Tinytest.add('Router i18n - test excluded', function (test) {
+
+        testExclude(test, 'server');
 
     });
 
