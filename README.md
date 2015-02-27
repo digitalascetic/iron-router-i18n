@@ -329,7 +329,7 @@ Router.configure({
         server: {
 
           exclude: {
-             sitemap: '^\/sitemap.xml'
+             sitemap: '^\/sitemap\.xml'
           }
 
         }
