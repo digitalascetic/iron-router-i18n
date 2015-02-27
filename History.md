@@ -1,3 +1,10 @@
+## v0.5.3
+
+* Added the possibility to exclude specific paths from i18n #39
+* Added ```Router.isLangCodeMissing``` to know whether lang code was missing or not from original requested path (before
+eventual ```missingLangCodeAction``` redirection), see #38.
+
+
 ## v0.5.2
 
 Bug fixing and better compatibility with other Iron Router modules. Thanks to @dohomi and @mxab

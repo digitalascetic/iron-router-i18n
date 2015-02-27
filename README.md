@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.5.2
+**Latest Version:** 0.5.3
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -294,6 +294,69 @@ while at path '/en/about' of the above example conf it will automatically switch
 #### getDefaultLanguage()
 
 Returns the default language for the Router. Default implementation just return "en".
+
+
+#### exclude
+
+Gives the possibility to exclude specific routes or path patterns from being handled by Iron Router i18n, can be useful for special
+cases like admin pages or server side sitemap routes.
+
+The exclude parameter can be configured as a string (will be interpreted as a Regex), a function (will be passed the path to
+match and will exclude the path by returning true), an array whose values are strings or functions (or other array of string
+and functions) or an object whose values are objects, array, strings or functions as described above.
+
+The other possibility is to exclude a specific route just by setting to true the "exclude" parameter on the route.
+
+```javascript
+Router.configure({
+
+    ...
+
+    i18n: {
+
+        ...
+
+        exclude: {
+          // Paths beginning with "/admin"
+          admin_paths: '^\/admin',
+          // Paths ending with ".special"
+          special_paths: function(path) {
+             if (path.substr(-8) == '.special' {
+               return true;
+             }
+             return false;
+          }
+
+        },
+
+        server: {
+
+          exclude: {
+             sitemap: '^\/sitemap.xml'
+          }
+
+        }
+
+        ...
+
+    }
+});
+```
+
+To exclude a single route:
+
+```javascript
+
+     Router.route('about', {
+         path: '/about',
+         i18n: {
+             exclude: true
+         }
+
+     });
+```
+
+
 
 
 ### Methods
