@@ -298,12 +298,9 @@ Returns the default language for the Router. Default implementation just return 
 
 #### exclude
 
-Gives the possibility to exclude specific routes or path patterns from being handled by Iron Router i18n, can be useful for special
-cases like admin pages or server side sitemap routes.
+Gives the possibility to exclude specific routes or path patterns from being handled by Iron Router i18n, can be useful for special cases like admin pages or server side sitemap routes.
 
-The exclude parameter can be configured as a string (will be interpreted as a Regex), a function (will be passed the path to
-match and will exclude the path by returning true), an array whose values are strings or functions (or other array of string
-and functions) or an object whose values are objects, array, strings or functions as described above.
+The exclude parameter can be configured as a string (will be interpreted as a Regex), a function (will be passed the path to match and will exclude the path by returning true), an array whose values are strings or functions (or other array of string and functions) or an object whose values are objects, array, strings or functions as described above.
 
 The other possibility is to exclude a specific route just by setting to true the "exclude" parameter on the route.
 
