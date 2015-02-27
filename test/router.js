@@ -745,11 +745,13 @@ function testExclude(test, env) {
     var testRouteMatchedTesti18n = false;
     var testRouteMatchedExcluded = false;
     var testRouteMatchedAdmin = false;
+    var testRouteMatchedExcludedRoute = false;
 
     var resetRouter = function () {
         testRouteMatchedTesti18n = false;
         testRouteMatchedExcluded = false;
         testRouteMatchedAdmin = false;
+        testRouteMatchedExcludedRoute = false;
     };
 
     router.route('/test-i18n',
@@ -796,6 +798,21 @@ function testExclude(test, env) {
         }
     );
 
+    router.route('/excludedroute',
+        {
+            action: function () {
+                testRouteMatchedExcludedRoute = true;
+            },
+
+            i18n: {
+                exclude: true
+            },
+
+            where: env
+
+        }
+    );
+
     var res = {
         setHeader: function () {
         },
@@ -823,6 +840,7 @@ function testExclude(test, env) {
     // Admin pages
     req = {url: '/admin'};
     router(req, res, next);
+    test.isFalse(missingLangCodeAction, 'missingLangCodeAction is called for /admin');
     test.isTrue(testRouteMatchedAdmin, '"admin" route not matched for /admin');
     resetRouter();
 
@@ -841,11 +859,12 @@ function testExclude(test, env) {
     req = {url: '/es/admin'};
     router(req, res, next);
     test.isFalse(testRouteMatchedAdmin, '"admin" route matched on /es/admin');
-
+    resetRouter();
 
     // Excluded page
     req = {url: '/section/excluded.page.admin'};
     router(req, res, next);
+    test.isFalse(missingLangCodeAction, 'missingLangCodeAction is called for /section/excluded.page.admin');
     test.isTrue(testRouteMatchedExcluded, '"/section/excluded.page.admin" route not matched for /section/excluded.page.admin');
     resetRouter();
 
@@ -857,6 +876,7 @@ function testExclude(test, env) {
 
     req = {url: '/section/excluded.page2.admin'};
     router(req, res, next);
+    test.isFalse(missingLangCodeAction, 'missingLangCodeAction is called for /section/excluded.page2.admin');
     test.isTrue(testRouteMatchedExcluded, '"/section/excluded.page2.admin" route not matched for /section/excluded.page2.admin');
     resetRouter();
 
@@ -864,6 +884,19 @@ function testExclude(test, env) {
     req = {url: '/es/section/excluded.page2.admin'};
     router(req, res, next);
     test.isFalse(testRouteMatchedExcluded, '"/section/excluded.page2.admin" route matched for /es/section/excluded.page2.admin');
+    resetRouter();
+
+    // Single excluded route
+    req = {url: '/excludedroute'};
+    router(req, res, next);
+    test.isFalse(missingLangCodeAction, 'missingLangCodeAction is called for /excludedroute');
+    test.isTrue(testRouteMatchedExcludedRoute, '"/excludedroute" route is not matched for /excludedroute');
+    resetRouter();
+
+    req = {url: '/es/excludedroute'};
+    router(req, res, next);
+    test.isFalse(testRouteMatchedExcludedRoute, '"/excludedroute" route is matched for /es/excludedroute');
+    resetRouter();
 
 }
 
