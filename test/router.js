@@ -900,6 +900,76 @@ function testExclude(test, env) {
 
 }
 
+function testNoLangCodeForDefaultLanguage(test, env) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    var missingLangCodeAction = false;
+
+    router.configure({
+        i18n: {
+
+            compulsoryLangCode: true,
+
+            langCodeForDefaultLanguage: false,
+
+            defaultLanguage: 'en',
+
+            missingLangCodeAction: function () {
+                missingLangCodeAction = true;
+            }
+        }
+    });
+
+    var testRouteMatched = false;
+
+    var resetRouter = function () {
+        testRouteMatched = false;
+    };
+
+    router.route('/test-i18n',
+        {
+            action: function () {
+                testRouteMatched = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    var res = {
+        setHeader: function () {
+        },
+        end: function () {
+        }
+    };
+    var next = function () {
+    };
+
+    var req = {url: '/es/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /es/test-i18n');
+    resetRouter();
+
+    req = {url: '/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /test-i18n');
+    resetRouter();
+
+    req = {url: '/it/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /it/test-i18n');
+    resetRouter();
+
+    // Lang code missing
+    //req = {url: '/en/test-i18n'};
+    //router(req, res, next);
+    //test.isTrue(missingLangCodeAction, '"test-i18n": missingLangCodeAction not called on route without lang code');
+
+}
 
 
 if (Meteor.isClient) {
@@ -948,6 +1018,13 @@ if (Meteor.isClient) {
 
     });
 
+    Tinytest.add('Router i18n - test noLangCodeForDefaultLanguage', function (test) {
+
+        testNoLangCodeForDefaultLanguage(test, 'client');
+
+    });
+
+
 
 }
 
@@ -995,6 +1072,12 @@ if (Meteor.isServer) {
     Tinytest.add('Router i18n - test excluded', function (test) {
 
         testExclude(test, 'server');
+
+    });
+
+    Tinytest.add('Router i18n - test noLangCodeForDefaultLanguage', function (test) {
+
+        testNoLangCodeForDefaultLanguage(test, 'server');
 
     });
 
