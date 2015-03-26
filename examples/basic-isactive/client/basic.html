@@ -41,7 +41,7 @@
 <template name="Nav">
     <ul>
         <li>
-            <a class="{{isActiveRoute regex='^home$' }}" href="/">Home</a>
+            <a class="{{isActiveRoute regex='^home$' }}" href="{{pathFor 'home'}}">Home</a>
         </li>
         <li>
             <a class="{{isActiveRoute regex='^one$' }}" href="{{pathFor 'one'}}">Page One</a>
