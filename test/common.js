@@ -16,7 +16,10 @@ defaultConf = function (router) {
 
             languages: ['it', 'es', 'en'],
 
-            setLangCode: false
+            setLangCode: false,
+
+            // Avoid to persist language between tests!
+            persistLanguage: false
 
         }
 

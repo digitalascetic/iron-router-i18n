@@ -98,7 +98,10 @@ Tinytest.add('Router i18n - test Router language methods', function (test) {
     var router = initRouter();
 
     router.configure({
-        i18n: {}
+        i18n: {
+            // Avoid to persist language between tests!
+            persistLanguage: false
+        }
     });
 
     test.equal(router.getDefaultLanguage(), 'en', 'Router default language is not "en".');
@@ -109,7 +112,10 @@ Tinytest.add('Router i18n - test Router language methods', function (test) {
         i18n: {
             defaultLanguage: 'es',
 
-            languages: ['it', 'es', 'en']
+            languages: ['it', 'es', 'en'],
+
+            // Avoid to persist language between tests!
+            persistLanguage: false
         }
     });
 
@@ -134,7 +140,10 @@ Tinytest.add('Router i18n - test Router language methods', function (test) {
                 return 'en';
             },
 
-            languages: ['it', 'es', 'en']
+            languages: ['it', 'es', 'en'],
+
+            // Avoid to persist language between tests!
+            persistLanguage: false
 
         }
     });
