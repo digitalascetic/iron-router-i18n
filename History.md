@@ -1,3 +1,12 @@
+## v0.5.4
+
+* **NEW FEATURE** Added ```langCodeForDefaultLanguage``` configuration options to allow language code to be removed from default language routes.
+* **NEW FEATURE** Added ```persistLanguage``` configuration options, default implementation persist the chosen language between requests through a cookie (#37)
+* Fixed a bug with ```autoConfLanguage``` not working with browser presenting country code specific languages (see #42).
+* Handled the strange way Chrome manage ```navigator.language``` preventing ```autoConfLanguage``` to work correctly (#44).
+* Fixed and edge case that prevented back button to work (#43).
+
+
 ## v0.5.3
 
 * Added the possibility to exclude specific paths from i18n #39

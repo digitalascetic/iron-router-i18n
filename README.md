@@ -1,11 +1,11 @@
 # Iron Router i18n 
 
-Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/iron-router) package.
+Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/iron-router) [meteor](https://www.meteor.com/) package.
 
 
 ## History
 
-**Latest Version:** 0.5.3
+**Latest Version:** 0.5.4
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
@@ -34,6 +34,7 @@ or use different language aware url schema e.g. `http://example.com/test.it` ins
  (see https://github.com/EventedMind/iron-router/issues/656). E.g. `/quienes-somos` as a path for spanish `about`.
 * Default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Server side behaviour, e.g. use a 301 redirect to url with language code when calling a server route.
+* Many other configuration and tweaking options (see docs)
 
 
 
@@ -270,6 +271,18 @@ Router.configure({
 });
 ```
 
+#### persistLanguage(lang)
+
+Can be used client and server side to persist the chosen language between requests. Default implementation (just client side)
+uses a cookie to store the selected language. Any implementation should use ```lang``` parameter to set the language and always 
+return the currently stored language whether called with or without a parameter. Just set to ```false``` if you want to disable
+language persistance between requests.
+
+#### persistCookieExpiration
+
+The value in microseconds of the cookie expiration date set by default implementation of ```persistLanguage```. Can be an integer
+value or a function returning an integer value.
+
 #### missingLangCodeAction(path)
 
 Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path
@@ -353,7 +366,11 @@ To exclude a single route:
      });
 ```
 
+#### langCodeForDefaultLanguage
 
+Configure whether the language code should be added and considered for default language routes that is if deafault language is 'en' 
+and set to ```false``` the three routes will be ```/about```, ```/es/about``` and ```/it/about``` instead of ```/en/about```, 
+```/es/about``` and ```/it/about```. Defaults to ```true```.
 
 
 ### Methods

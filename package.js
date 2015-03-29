@@ -4,14 +4,13 @@ Package.describe({
     summary: 'Iron Router support for i18n',
     git: "https://github.com/yoolab/iron-router-i18n.git",
     name: "martino:iron-router-i18n",
-    version: '0.5.3'
+    version: '0.5.4'
 });
 
 Package.onUse(function (api) {
 
     api.versionsFrom('1.0');
 
-    api.use('reactive-dict@1.0.5', ['client', 'server']);
     api.use('tracker@1.0.5', ['client', 'server']);
     api.use('underscore@1.0.2', ['client', 'server']);
 
@@ -34,7 +33,6 @@ Package.onUse(function (api) {
 
 Package.onTest(function (api) {
 
-    api.use('reactive-dict@1.0.5', ['client', 'server']);
     api.use('tracker@1.0.5', ['client', 'server']);
     api.use('underscore@1.0.2', ['client', 'server']);
 
