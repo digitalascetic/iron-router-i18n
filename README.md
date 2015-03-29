@@ -405,9 +405,8 @@ to know whether ```getLanguage``` is just returning the default language or a la
 
 #### Router.isLangCodeMissing()
 
-Returns true if the current location state comes from a ```missingLangCodeAction``` redirect. Used to know whether lang code 
-was missing or not from original requested path (before eventual ```missingLangCodeAction``` redirection), see #38 for
-original motivation.
+Used to know whether lang code was missing or not from original requested path (before eventual ```missingLangCodeAction``` redirection),
+see #38 for original motivation.
 
 
 ### Helpers
