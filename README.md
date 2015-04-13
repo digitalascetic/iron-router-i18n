@@ -291,12 +291,12 @@ Router.configure({
 });
 ```
 
-#### getLanguage(lang)
+#### getLanguage(lang) (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
 
 Called by `Router.getLanguage` to retrieve current router language.
 
 
-#### setLanguage(lang)
+#### setLanguage(lang) (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
 
 Called when the Router language is changed programmatically (`Router.setLanguage(lang)`) or when changing the current 
 language with a request containing a lang code e.g. `/es/about` will change the Router language and call this method.
@@ -430,13 +430,13 @@ Use [i18n-conf](https://atmospherejs.com/martino/i18n-conf) for configuration if
 
 ### Methods
 
-#### Router.setLanguage(lang)
+#### Router.setLanguage(lang) (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
 
 Programmatically changes the router language. This can be used to set the router language based on some user properties
 (e.g. after login or on the startup script based on some cookie) or when a user switch the language with some action.
 
 
-#### Router.getLanguage()
+#### Router.getLanguage() (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
 
 Retrieves the current language the router is using.
 
@@ -444,7 +444,7 @@ Retrieves the current language the router is using.
 
 Gets the default language the router is using (see `defaultLanguage` property and `getDefaultLanguage` hook)
 
-#### Router.getLanguageDep()
+#### Router.getLanguageDep() (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
 
 Returns language dependency, can be used to change reactively on router language change.
 
