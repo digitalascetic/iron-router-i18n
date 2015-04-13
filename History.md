@@ -1,3 +1,8 @@
+## v0.5.5
+
+* **NEW FEATURE** Added [martino:i18n-conf](https://atmospherejs.com/martino/i18n-conf) based configuration (see [#46](https://github.com/yoolab/iron-router-i18n/issues/46)).
+
+
 ## v0.5.4
 
 * **NEW FEATURE** Added ```langCodeForDefaultLanguage``` configuration options to allow language code to be removed from default language routes.
