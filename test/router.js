@@ -27,6 +27,31 @@ Tinytest.add('Router i18n - test i18n Router configuration', function (test) {
 
 });
 
+
+Tinytest.add('Router i18n - test i18n-conf i18n Router configuration', function (test) {
+
+    var router = initi18nConfRouter();
+
+    i18nConf(router);
+
+    router.configure({
+        i18n: {
+            defaultLanguage: 'es'
+        }
+    });
+
+    // Test configured options
+    test.equal(router.options.i18n.defaultLanguage, 'es', 'Default language for client is not "es".');
+    test.equal(router.options.i18n.languages[0], 'it', 'First language for client is not "it".');
+    test.equal(router.options.i18n.languages[1], 'es', 'Second language for client is not "es".');
+    test.equal(router.options.i18n.languages[2], 'en', 'Third language for client is not "en".');
+
+    // Test default options
+    test.equal(router.options.i18n.redirectCode, 301, 'Default redirect code is not 301.');
+    test.isFalse(router.options.i18n.autoConfLanguage, 'Default value for autoCofLanguage is not "false" .');
+
+});
+
 Tinytest.add('Router i18n - test i18n Router client/server configuration', function (test) {
 
     var router = initRouter();
