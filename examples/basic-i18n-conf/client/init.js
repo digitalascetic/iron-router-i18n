@@ -2,7 +2,9 @@ I18NConf.configure({
 
     languages: ["it", "en", "es"],
 
-    defaultLanguage: 'en'
+    defaultLanguage: 'en',
+
+    autoConfLanguage: true
 
 });
 

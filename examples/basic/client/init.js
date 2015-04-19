@@ -10,6 +10,8 @@ Router.configure({
 
         defaultLanguage: 'en',
 
+        autoConfLanguage: true,
+
         _language: null,
 
         getLanguage: function () {
@@ -31,7 +33,7 @@ Router.configure({
 Router.route('/', function () {
     // render the Home template with a custom data context
     this.render('Home', {data: {title: 'My Title'}});
-});
+}, { name: "home"});
 
 // when you navigate to "/one" automatically render the template named "One".
 Router.route('one', {
