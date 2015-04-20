@@ -1,6 +1,6 @@
 .build*
 .idea*
 martino:iron-router-i18n.iml
-packages
+/packages
 smart.lock
 .npm*

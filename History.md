@@ -1,3 +1,10 @@
+## v0.5.7
+
+* Fixed bug causing in certain cases to set persist language cookie on different paths than root ("/") (see #53)
+* ```Router.getLanguage``` was not using i18n-conf when available (bug, see #51)
+* Language was autoconfigured even when previously persisted (bug, see #52)
+* Fixed bugs regarding i18n-conf weak dependency 
+
 ## v0.5.6
 
 * Fix bug causing ```setLanguage``` being called twice when using i18n-conf (see #50)

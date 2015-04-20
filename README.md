@@ -5,12 +5,12 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.5.6
+**Latest Version:** 0.5.7
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
 
-**WARNING:** Upcoming version 0.6.0 will change Iron Router i18n basic configuration method by using [i18n-conf](https://atmospherejs.com/martino/i18n-conf) package for it.
+**WARNING:** Upcoming version 1.0.0 will change Iron Router i18n basic configuration method by using [i18n-conf](https://atmospherejs.com/martino/i18n-conf) package for it.
 Route configuration will be unchanged. See also [#46](https://github.com/yoolab/iron-router-i18n/issues/46)).
 
 
