@@ -54,6 +54,14 @@ Tinytest.add('Router i18n - test helpers', function (test) {
 
     test.equal(urlFor('about', {hash: {lang: 'es'}}), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/es/quienes-somos was not the result when calling pathFor with lang = es option');
 
+    // origRoute
+
+    test.equal(pathFor('test-i18n', {hash: {origRoute: true}}), '/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
+
+    test.equal(urlFor('test-i18n', {hash: {origRoute: true}}), 'http://localhost:3000/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
+
+
+
 });
 
 

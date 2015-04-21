@@ -763,7 +763,7 @@ function testExclude(test, env) {
             exclude: {
 
                 admin: "^\/admin",
-                pages: function(path) {
+                pages: function (path) {
                     // exclude any url which ends with ".admin"
                     if (path.substr(-6) == '.admin') {
                         return true;
@@ -1006,6 +1006,66 @@ function testNoLangCodeForDefaultLanguage(test, env) {
 }
 
 
+function testOrigRoute(test, env) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    router.route('/about',
+        {
+            name: 'about',
+            where: env
+        });
+
+
+    router.route('/post/:_id',
+        {
+            name: 'post',
+            where: env
+        });
+
+    test.equal(router.routes['about'].path({}, {origRoute: true}), "/about", 'Original route path not identified as /about');
+    test.equal(router.routes['about'].path({}), "/en/about", 'Original route path not identified as /en/about');
+    test.equal(router.routes['post'].path({_id: 23}, {origRoute: true}), "/post/23", 'Original route path not identified as /post/23');
+    test.equal(router.routes['post'].path({_id: 23}), "/en/post/23", 'Original route path not identified as /en/post/23');
+
+    router = initRouter();
+
+    defaultConf(router);
+
+    router.configure({
+        i18n: {
+
+            langCodeForDefaultLanguage: false
+
+        }
+    });
+
+    router.route('/about',
+        {
+            name: 'about',
+            where: env
+        });
+
+
+    router.route('/post/:_id',
+        {
+            name: 'post',
+            where: env
+        });
+
+    test.equal(router.routes['about'].path({}, {origRoute: true}), "/about", 'Original route path not identified as /about');
+    test.equal(router.routes['about'].path({}), "/about", 'Original route path not identified as /about');
+    test.equal(router.routes['post'].path({_id: 23}, {origRoute: true}), "/post/23", 'Original route path not identified as /post/23');
+    test.equal(router.routes['post'].path({_id: 23}), "/post/23", 'Original route path not identified as /post/23');
+
+
+
+
+}
+
+
 if (Meteor.isClient) {
 
     Tinytest.add('Router i18n - test default language prefix strategy', function (test) {
@@ -1058,6 +1118,11 @@ if (Meteor.isClient) {
 
     });
 
+    Tinytest.add('Router i18n - test origRoute', function (test) {
+
+        testOrigRoute(test, 'client');
+
+    });
 
 
 }
@@ -1112,6 +1177,12 @@ if (Meteor.isServer) {
     Tinytest.add('Router i18n - test noLangCodeForDefaultLanguage', function (test) {
 
         testNoLangCodeForDefaultLanguage(test, 'server');
+
+    });
+
+    Tinytest.add('Router i18n - test origRoute', function (test) {
+
+        testOrigRoute(test, 'server');
 
     });
 

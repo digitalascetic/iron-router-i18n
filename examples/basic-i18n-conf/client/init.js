@@ -8,6 +8,12 @@ I18NConf.configure({
 
 });
 
+I18NConf.onLanguageChange(function(oldLang, newLang) {
+
+    console.log("New lang: " + newLang);
+
+});
+
 Router.configure({
 
     layoutTemplate: 'layout',
