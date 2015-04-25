@@ -9,46 +9,8 @@ Tinytest.add('Router i18n - test i18n Router configuration', function (test) {
 
     defaultConf(router);
 
-    router.configure({
-        i18n: {
-            defaultLanguage: 'es'
-        }
-    });
-
-    // Test configured options
-    test.equal(router.options.i18n.defaultLanguage, 'es', 'Default language for client is not "es".');
-    test.equal(router.options.i18n.languages[0], 'it', 'First language for client is not "it".');
-    test.equal(router.options.i18n.languages[1], 'es', 'Second language for client is not "es".');
-    test.equal(router.options.i18n.languages[2], 'en', 'Third language for client is not "en".');
-
     // Test default options
     test.equal(router.options.i18n.redirectCode, 301, 'Default redirect code is not 301.');
-    test.isFalse(router.options.i18n.autoConfLanguage, 'Default value for autoCofLanguage is not "false" .');
-
-});
-
-
-Tinytest.add('Router i18n - test i18n-conf i18n Router configuration', function (test) {
-
-    var router = initi18nConfRouter();
-
-    i18nConf(router);
-
-    router.configure({
-        i18n: {
-            defaultLanguage: 'es'
-        }
-    });
-
-    // Test configured options
-    test.equal(router.options.i18n.defaultLanguage, 'es', 'Default language for client is not "es".');
-    test.equal(router.options.i18n.languages[0], 'it', 'First language for client is not "it".');
-    test.equal(router.options.i18n.languages[1], 'es', 'Second language for client is not "es".');
-    test.equal(router.options.i18n.languages[2], 'en', 'Third language for client is not "en".');
-
-    // Test default options
-    test.equal(router.options.i18n.redirectCode, 301, 'Default redirect code is not 301.');
-    test.isFalse(router.options.i18n.autoConfLanguage, 'Default value for autoCofLanguage is not "false" .');
 
 });
 
@@ -62,14 +24,14 @@ Tinytest.add('Router i18n - test i18n Router client/server configuration', funct
 
         i18n: {
 
-            defaultLanguage: 'pt',
+            redirectCode: 303,
 
             client: {
-                defaultLanguage: 'it'
+                redirectCode: 304
             },
 
             server: {
-                defaultLanguage: 'de'
+                redirectCode: 305
             }
 
         }
@@ -78,9 +40,9 @@ Tinytest.add('Router i18n - test i18n Router client/server configuration', funct
 
 
     if (Meteor.isServer) {
-        test.equal(router.options.i18n.defaultLanguage, 'de', 'Default language for server is not "de" as overridden by server configuration.');
+        test.equal(router.options.i18n.redirectCode, 305, 'Default redirect code for server is not 305 as overridden by server configuration.');
     } else {
-        test.equal(router.options.i18n.defaultLanguage, 'it', 'Default language for client is not "it" as overridden by client configuration.');
+        test.equal(router.options.i18n.redirectCode, 304, 'Default redirect code for client is not 304 as overridden by client configuration.');
     }
 
 });
@@ -114,66 +76,6 @@ Tinytest.add('Router i18n - test i18n missingLangCodeAction call', function (tes
     router.dispatch('/missingLangCodeRoute', null, null);
     test.isTrue(clientMissingLangCodeAction, 'Client configured missingLangCodeAction was not called.');
 
-
-});
-
-
-Tinytest.add('Router i18n - test Router language methods', function (test) {
-
-    var router = initRouter();
-
-    router.configure({
-        i18n: {
-            // Avoid to persist language between tests!
-            persistLanguage: false
-        }
-    });
-
-    test.equal(router.getDefaultLanguage(), 'en', 'Router default language is not "en".');
-
-    router = initRouter();
-
-    router.configure({
-        i18n: {
-            defaultLanguage: 'es',
-
-            languages: ['it', 'es', 'en'],
-
-            // Avoid to persist language between tests!
-            persistLanguage: false
-        }
-    });
-
-
-    test.equal(router.getDefaultLanguage(), 'es', 'Router default language after changing "defaultLanguage" conf option is not "es".');
-
-    // Testing getLanguage
-    test.equal(router.getLanguage(), 'es', 'Router language is not "es" when having defaultLanguage "es".');
-
-    //Testing language change
-    router.setLanguage('it');
-    test.equal(router.getLanguage(), 'it', 'Router did not change language to "it"');
-
-
-    // Testing custom getDefaultLanguage method
-    router = initRouter();
-
-    router.configure({
-
-        i18n: {
-            getDefaultLanguage: function () {
-                return 'en';
-            },
-
-            languages: ['it', 'es', 'en'],
-
-            // Avoid to persist language between tests!
-            persistLanguage: false
-
-        }
-    });
-
-    test.equal(router.getDefaultLanguage(), 'en', 'Router default language is not "en" after setting getDefaultLanguage method.')
 
 });
 
@@ -474,7 +376,7 @@ function testCustomPath(test, env) {
     req = {url: '/es/contact'};
     router(req, res, next);
     test.isTrue(testRouteMatchedEN, 'es route not matched for /es/contact');
-    test.equal(router.getLanguage(), 'es', '"es" not set as language for route /es/contact');
+    test.equal(I18NConf.getLanguage(), 'es', '"es" not set as language for route /es/contact');
     resetVars();
 
 
@@ -948,8 +850,6 @@ function testNoLangCodeForDefaultLanguage(test, env) {
             compulsoryLangCode: true,
 
             langCodeForDefaultLanguage: false,
-
-            defaultLanguage: 'en',
 
             missingLangCodeAction: function () {
                 missingLangCodeAction = true;
