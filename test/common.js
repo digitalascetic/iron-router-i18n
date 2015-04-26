@@ -1,5 +1,11 @@
-initRouter = function () {
+resetCookie = function() {
+    if (Meteor.isClient) {
+        document.cookie = 'martino:i18n-conf:lang' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+}
 
+initRouter = function () {
+    resetCookie();
     return new Iron.Router({autoRender: false, autoStart: false});
 
 };
@@ -12,8 +18,12 @@ defaultConf = function (router) {
 
         languages: ['it', 'es', 'en'],
 
+        language: 'en',
+
         // Avoid to persist language between tests!
-        persistLanguage: false
+        persistLanguage: false,
+
+        autoConfLanguage: false
 
     });
 
