@@ -5,14 +5,10 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 0.5.7
+**Latest Version:** 1.0.0
 
 See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
 versions.
-
-**WARNING:** Upcoming version 1.0.0 will change Iron Router i18n basic configuration method by using [i18n-conf](https://atmospherejs.com/martino/i18n-conf) package for it.
-Route configuration will be unchanged. See also [#46](https://github.com/yoolab/iron-router-i18n/issues/46)).
-
 
 ## About
 
@@ -54,8 +50,7 @@ $ meteor add martino:iron-router-i18n
 
 ### Basic configuration
 
-Since version 0.5.5 the preferred way to configure basic options (```languages```, ```defaultLanguage```) for Iron Router i18n 
-is through [i18n-conf](https://atmospherejs.com/martino/i18n-conf) a package .
+Basic Iron Router i18n configuration is done through [i18n-conf](https://atmospherejs.com/martino/i18n-conf) 
 
 ```javascript
 I18NConf.configure({
@@ -97,36 +92,14 @@ Router.configure({
      });
 ```
 
-Router language will be automatically changed using ```I18NConf.setLanguage(lang)``` and I18NConf current language will
-be changed when calling a language aware route (e.g. ```/es/about``` will change the language to ```es```.
-
-
-All 0.5.x release will also maintain compatibility with the old configuration method:
-
-```javascript
-Router.configure({
-
-    ...
-
-    i18n: {
-
-        languages: ['it', 'es', 'en']
-
-    }
-    
-});
-```
-
-0.6 release will probably end this compatibility that's why some configuration options (and methods) are deprecated.
+Router language will be automatically changed using ```I18NConf.setLanguage(lang)``` and I18NConf current language will be changed when calling a language aware route (e.g. ```/es/about``` will change the language to ```es```.
 
 
 ### Basic usage
 
-Iron Router i18n can be used out of the box with its default route i18n alias strategy which just prefix routes with 
-language codes e.g. the `about` route with path `/about` will be `/en/about` for english  and `/es/about` for spanish.
+Iron Router i18n can be used out of the box with its default route i18n alias strategy which just prefix routes with  language codes e.g. the `about` route with path `/about` will be `/en/about` for english  and `/es/about` for spanish.
  
-Since version 0.3.0 is also possible to specify custom path for i18n on each route. I18n routes configurations can 
-override other default route options in addition to `path`.
+Since version 0.3.0 is also possible to specify custom path for i18n on each route. I18n routes configurations can override other default route options in addition to `path`.
  
 ```javascript
 
@@ -147,7 +120,7 @@ override other default route options in addition to `path`.
      
 ```
 
-or, with new Iron Router 1.0.x
+or, with new Iron Router 1.x
 
 ```javascript
 
@@ -209,35 +182,6 @@ Given the router configuration above both configurations will create 3 routes:
 
 ### Configuration options
 
-#### languages (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Array that specify the supported languages, use it to identify url fragments that can be considered language codes (defaults to `['en']`)
-
-E.g.
-
-```javascript
-Router.configure({
-
-    ...
-
-    i18n: {
-
-        ...
-        
-        languages: ['en', 'es', 'it']
-
-    }
-});
-```
-
-#### defaultLanguage (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Set the default language for Iron Router i18n (defaults to `'en'`).
-
-#### autoConfLanguage (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-If set to true Iron Router i18n will try to autodetect the best language to use for current browser/request (defaults to false).
-
 #### compulsoryLangCode
 
 If set to true the router will consider compulsory for a route path to have a language code (e.g. `/en/about`) if the language code
@@ -251,13 +195,6 @@ Enable (true) or disable (false) server side functionality (default: false).
 
 The redirect code to use when redirecting when the lang code is missing from path (default: 301)
 
-
-#### getDefaultLanguage() (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Provides a method to return the default "fallback" language for Iron Router i18n. This is the language "fallback" language
- used when no current language is defined with `Router.setLanguage` or by using `autoConfLanguage`.
-(default implementation just returns defaultLanguage property which default to "en"). 
-
 #### addLangCode(url)
 
 If set will be used to add the language code to a route path which is missing one. Default implementation will add
@@ -266,7 +203,7 @@ If set will be used to add the language code to a route path which is missing on
 ```javascript
      Router.route('/about');
 ```
-with the default implementation will generate three routes with path: `/en/about`, `/es/about`, `/it/about`.
+with default implementation will generate three routes with path: `/en/about`, `/es/about`, `/it/about`.
 
 
 #### getLangCode(path)
@@ -294,48 +231,6 @@ Router.configure({
 });
 ```
 
-#### getLanguage(lang) (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Called by `Router.getLanguage` to retrieve current router language.
-
-
-#### setLanguage(lang) (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Called when the Router language is changed programmatically (`Router.setLanguage(lang)`) or when changing the current 
-language with a request containing a lang code e.g. `/es/about` will change the Router language and call this method.
-The method can be used to propagate the action to a i18n system e.g.
-
-```javascript
-Router.configure({
-
-    ...
-
-    i18n: {
-
-        ...
-        
-        setLanguage: function(lang) {
-          TAPi18n.setLanguage(lang);
-        }
-        
-        ...
-
-    }
-});
-```
-
-#### persistLanguage(lang) (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Can be used client and server side to persist the chosen language between requests. Default implementation (just client side)
-uses a cookie to store the selected language. Any implementation should use ```lang``` parameter to set the language and always 
-return the currently stored language whether called with or without a parameter. Just set to ```false``` if you want to disable
-language persistance between requests.
-
-#### persistCookieExpiration (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-The value in microseconds of the cookie expiration date set by default implementation of ```persistLanguage```. Can be an integer
-value or a function returning an integer value.
-
 #### missingLangCodeAction(path)
 
 Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path
@@ -355,11 +250,6 @@ E.g. when `/es/about` is called and the current language is not spanish, the cur
 Action to be taken when switching programmatically the language code in the URL (see "Methods" below). Default behaviour
 is to change the url according to the default lang code "prefix" strategy. E.g. if calling `Router.setLanguage('it')`
 while at path '/en/about' of the above example conf it will automatically switch the location to `/it/chi-siamo`.
-
-
-#### getDefaultLanguage() (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Returns the default language for the Router. Default implementation just return "en".
 
 
 #### exclude
@@ -426,40 +316,13 @@ and set to ```false``` the three routes will be ```/about```, ```/es/about``` an
 ```/es/about``` and ```/it/about```. Defaults to ```true```.
 
 
-#### i18nConf
+### Methods (Router)
 
-Use [i18n-conf](https://atmospherejs.com/martino/i18n-conf) for configuration if available (default: ```true```).
-
-
-### Methods
-
-#### Router.setLanguage(lang) (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Programmatically changes the router language. This can be used to set the router language based on some user properties
-(e.g. after login or on the startup script based on some cookie) or when a user switch the language with some action.
-
-
-#### Router.getLanguage() (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Retrieves the current language the router is using.
-
-#### Router.getDefaultLanguage() (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Gets the default language the router is using (see `defaultLanguage` property and `getDefaultLanguage` hook)
-
-#### Router.getLanguageDep() (deprecated, see [#46](https://github.com/yoolab/iron-router-i18n/issues/46))
-
-Returns language dependency, can be used to change reactively on router language change.
 
 #### Router.getLangCode()
 
 Returns the current route language code (if any), e.g. "en" for "en/about". It can also be used to know
 whether the route was called with a lang code in it or not to know whether to switch language.
-
-#### Router.isLanguageSet()
-
-Returns true if the language was explicitly set (i.e. if ```setLanguage```method was called at least once). Can be useful
-to know whether ```getLanguage``` is just returning the default language or a language explicitly set.
 
 #### Router.isLangCodeMissing()
 
@@ -471,14 +334,24 @@ see #38 for original motivation.
 
 #### pathFor
 
-Overrides iron:router pathFor helper making it reactive on router language change and adds the "lang" parameter 
-to force language for path. 
+Overrides iron:router pathFor helper making it reactive on router language change. Adds the "lang" parameter to force language for path and the "origRoute" parameter to show the original non localized route path. 
 
 E.g.
 
-`{{pathFor route='items' lang="it"}}`
+```
+ Router.route('about');
+```
 
-will always show route `'items'` for language `it`.
+
+```{{pathFor route='items' lang="it"}}```
+
+will show path ```/it/about```
+
+```{{pathFor route='items' origRoute="true"}}```
+
+will show path ```/about```, the "original", non localized path, (see [#55](https://github.com/yoolab/iron-router-i18n/issues/55) for a use case for this)
+
+
 
 #### urlFor
 

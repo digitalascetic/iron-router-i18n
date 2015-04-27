@@ -1,3 +1,9 @@
+## v1.0.0
+
+* **BREAKING CHANGE** Iron Router i18n is now configurable just through [i18n-conf](https://atmospherejs.com/martino/i18n-conf)
+* **BREAKING CHANGE** Removed deprecated methods and configuration options (now found in i18n-conf) 
+* Added and improved tests
+
 ## v0.5.7
 
 * Fixed bug causing in certain cases to set persist language cookie on different paths than root ("/") (see #53)
