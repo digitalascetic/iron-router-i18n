@@ -17,7 +17,7 @@ Package.onUse(function (api) {
     api.use("iron:router@1.0.0", ['client', 'server']);
 
     // Dependency on i18n-conf, see #46
-    api.use("martino:i18n-conf@0.3.0", ['client', 'server']);
+    api.use("martino:i18n-conf@0.3.1", ['client', 'server']);
 
     // for helpers
     api.use('blaze', 'client');
@@ -39,7 +39,7 @@ Package.onTest(function (api) {
     api.use('tracker@1.0.5', ['client', 'server']);
     api.use('underscore@1.0.2', ['client', 'server']);
 
-    api.use("martino:i18n-conf@0.3.0", ['client', 'server']);
+    api.use("martino:i18n-conf@0.3.1", ['client', 'server']);
 
     api.use("iron:router@1.0.0", ['client', 'server']);
 
