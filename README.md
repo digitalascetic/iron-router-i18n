@@ -7,11 +7,9 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 **Latest Version:** 1.0.0
 
-Docs for previous 0.5.x versions can be found [here](https://github.com/yoolab/iron-router-i18n/tree/0.5.x). Upgrade to 1.x versions
-can be done just by switching to [i18n-conf](https://atmospherejs.com/martino/i18n-conf) configuration.
+Docs for previous 0.5.x versions can be found [here](https://github.com/yoolab/iron-router-i18n/tree/0.5.x). Upgrade to 1.x versions can be done just by switching to [i18n-conf](https://atmospherejs.com/martino/i18n-conf) configuration.
 
-See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across
-versions. 
+See the [History.md](https://github.com/yoolab/iron-router-i18n/blob/master/History.md) file for changes (including breaking changes) across versions. 
 
 ## About
 
@@ -67,7 +65,7 @@ I18NConf.configure({
      });
 ```
 
-Other specific options can be configured directly on the Router (all iron-router-i18n configuration options are within the i18n option namespace)::
+Other specific options can be configured directly on the Router (all iron-router-i18n configuration options are within the i18n option namespace):
 
 ```javascript
 Router.configure({
@@ -236,10 +234,7 @@ Router.configure({
 
 #### missingLangCodeAction(path)
 
-Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path
-based on the current configured language). E.g. when receiving a request for `/about` and the current language is "en"
-it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en/about`. If the function returns `true` the 
-request dispatch will return immediately after this method execution, otherwise it will continue normally.
+Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path based on the current configured language). E.g. when receiving a request for `/about` and the current language is "en" it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en/about`. If the function returns `true` the request dispatch will return immediately after this method execution, otherwise it will continue normally.
 
 
 #### langCodeAction(path)
@@ -250,9 +245,7 @@ E.g. when `/es/about` is called and the current language is not spanish, the cur
 
 #### setLangCode(lang)
 
-Action to be taken when switching programmatically the language code in the URL (see "Methods" below). Default behaviour
-is to change the url according to the default lang code "prefix" strategy. E.g. if calling `Router.setLanguage('it')`
-while at path '/en/about' of the above example conf it will automatically switch the location to `/it/chi-siamo`.
+Action to be taken when switching programmatically the language code in the URL (see "Methods" below). Default behaviour is to change the url according to the default lang code "prefix" strategy. E.g. if calling `Router.setLanguage('it')` while at path '/en/about' of the above example conf it will automatically switch the location to `/it/chi-siamo`.
 
 
 #### exclude
@@ -314,9 +307,7 @@ To exclude a single route:
 
 #### langCodeForDefaultLanguage
 
-Configure whether the language code should be added and considered for default language routes that is if deafault language is 'en' 
-and set to ```false``` the three routes will be ```/about```, ```/es/about``` and ```/it/about``` instead of ```/en/about```, 
-```/es/about``` and ```/it/about```. Defaults to ```true```.
+Configure whether the language code should be added and considered for default language routes that is if deafault language is 'en' and set to ```false``` the three routes will be ```/about```, ```/es/about``` and ```/it/about``` instead of ```/en/about```, ```/es/about``` and ```/it/about```. Defaults to ```true```.
 
 
 ### Methods (Router)
@@ -324,13 +315,11 @@ and set to ```false``` the three routes will be ```/about```, ```/es/about``` an
 
 #### Router.getLangCode()
 
-Returns the current route language code (if any), e.g. "en" for "en/about". It can also be used to know
-whether the route was called with a lang code in it or not to know whether to switch language.
+Returns the current route language code (if any), e.g. "en" for "en/about". It can also be used to know whether the route was called with a lang code in it or not to know whether to switch language.
 
 #### Router.isLangCodeMissing()
 
-Used to know whether lang code was missing or not from original requested path (before eventual ```missingLangCodeAction``` redirection),
-see #38 for original motivation.
+Used to know whether lang code was missing or not from original requested path (before eventual ```missingLangCodeAction``` redirection), see #38 for original motivation.
 
 
 ### Helpers
