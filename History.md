@@ -1,3 +1,9 @@
+## v0.5.8
+
+* **NEW FEATURE** added ```origRoute``` support on helpers and ```path``` method, shows a non localized path version of the route (see #55)
+* **NEW FEATURE** change html ```lang``` attribute on language change (see #56)
+* Fixed bug on ```setLangCode``` with non existent route (see #54)
+
 ## v0.5.7
 
 * Fixed bug causing in certain cases to set persist language cookie on different paths than root ("/") (see #53)
