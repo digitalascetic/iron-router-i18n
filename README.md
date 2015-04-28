@@ -471,14 +471,23 @@ see #38 for original motivation.
 
 #### pathFor
 
-Overrides iron:router pathFor helper making it reactive on router language change and adds the "lang" parameter 
-to force language for path. 
+Overrides iron:router pathFor helper making it reactive on router language change. Adds the "lang" parameter to force language for path and the "origRoute" parameter to show the original non localized route path. 
 
 E.g.
 
-`{{pathFor route='items' lang="it"}}`
+```
+ Router.route('about');
+```
 
-will always show route `'items'` for language `it`.
+
+```{{pathFor route='items' lang="it"}}```
+
+will show path ```/it/about```
+
+```{{pathFor route='items' origRoute="true"}}```
+
+will show path ```/about```, the "original", non localized path, (see [#55](https://github.com/yoolab/iron-router-i18n/issues/55) for a use case for this)
+
 
 #### urlFor
 
