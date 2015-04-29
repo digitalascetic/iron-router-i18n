@@ -1,3 +1,8 @@
+## v1.0.1
+
+* Fixed bug on ```Router.go``` causing method to tail on certain conditions (#57)
+
+
 ## v1.0.0
 
 * **BREAKING CHANGE** Iron Router i18n is now configurable just through [i18n-conf](https://atmospherejs.com/martino/i18n-conf)
