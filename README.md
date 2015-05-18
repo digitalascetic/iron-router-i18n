@@ -185,8 +185,7 @@ Given the router configuration above both configurations will create 3 routes:
 
 #### compulsoryLangCode
 
-If set to true the router will consider compulsory for a route path to have a language code (e.g. `/en/about`) if the language code
-is not found (through `getLangCode` function) `missingLangCodeAction` function will be called (default to true).
+If set to true the router will consider compulsory for a route path to have a language code (e.g. `/en/about`) if the language code is not found (through `getLangCode` function) `missingLangCodeAction` function will be called (default to true). You can set ```langCodeForDefaultLanguage``` if you just want to disable lang code for default language url.
 
 #### serverSide (just server)
 
@@ -234,7 +233,7 @@ Router.configure({
 
 #### missingLangCodeAction(path)
 
-Action to be taken when no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path based on the current configured language). E.g. when receiving a request for `/about` and the current language is "en" it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en/about`. If the function returns `true` the request dispatch will return immediately after this method execution, otherwise it will continue normally.
+Action taken when ```compulsoryLangCode``` is set to ```true``` and no language code can be found in path by `getLangCode` (default is trying to redirect to a language aware path based on the current configured language). E.g. when receiving a request for `/about` and the current language is "en" it will redirect (`Router.go` on the client, 301 Redirect on the server) to `/en/about`. If the function returns `true` the request dispatch will return immediately after this method execution, otherwise it will continue normally.
 
 
 #### langCodeAction(path)
