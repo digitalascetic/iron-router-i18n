@@ -31,41 +31,89 @@ Tinytest.add('Router i18n - test helpers', function (test) {
 
     test.equal(pathFor('test-i18n', {hash: {router: router}}), '/en/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
 
-    test.equal(pathFor({hash: {route: 'test-i18n', router: router}}), '/en/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
+    test.equal(pathFor({
+        hash: {
+            route: 'test-i18n',
+            router: router
+        }
+    }), '/en/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
 
-    test.equal(pathFor('test-i18n', {hash: {lang: 'it', router: router}}), '/it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
+    test.equal(pathFor('test-i18n', {
+        hash: {
+            lang: 'it',
+            router: router
+        }
+    }), '/it/test-i18n', '/it/test-i18n was not the result when calling pathFor with lang = it option');
 
     test.equal(pathFor('about', {hash: {router: router}}), '/en/about', '/en/about was not the result when calling pathFor with empty options.');
 
-    test.equal(pathFor('about', {hash: {lang: 'it', router: router}}), '/it/chi-siamo', '/it/chi-siamo was not the result when calling pathFor with lang = it option');
+    test.equal(pathFor('about', {
+        hash: {
+            lang: 'it',
+            router: router
+        }
+    }), '/it/chi-siamo', '/it/chi-siamo was not the result when calling pathFor with lang = it option');
 
-    test.equal(pathFor('about', {hash: {lang: 'es', router: router}}), '/es/quienes-somos', '/about was not the result when calling pathFor with lang = es option');
+    test.equal(pathFor('about', {
+        hash: {
+            lang: 'es',
+            router: router
+        }
+    }), '/es/quienes-somos', '/about was not the result when calling pathFor with lang = es option');
 
 
     var urlFor = Blaze._globalHelpers['urlFor'];
 
     test.equal(urlFor('test-i18n', {hash: {router: router}}), 'http://localhost:3000/en/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
 
-    test.equal(urlFor({hash: {route: 'test-i18n', router: router}}), 'http://localhost:3000/en/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling urlFor with empty options.');
+    test.equal(urlFor({
+        hash: {
+            route: 'test-i18n',
+            router: router
+        }
+    }), 'http://localhost:3000/en/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling urlFor with empty options.');
 
-    test.equal(urlFor('test-i18n', {hash: {lang: 'it', router: router}}), 'http://localhost:3000/it/test-i18n', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
+    test.equal(urlFor('test-i18n', {
+        hash: {
+            lang: 'it',
+            router: router
+        }
+    }), 'http://localhost:3000/it/test-i18n', 'http://localhost:3000/it/test-i18n was not the result when calling pathFor with lang = it option');
 
     test.equal(urlFor('about', {hash: {router: router}}), 'http://localhost:3000/en/about', 'http://localhost:3000/en/about was not the result when calling pathFor with empty options.');
 
-    test.equal(urlFor('about', {hash: {lang: 'it', router: router}}), 'http://localhost:3000/it/chi-siamo', 'http://localhost:3000/it/chi-siamo was not the result when calling pathFor with lang = it option');
+    test.equal(urlFor('about', {
+        hash: {
+            lang: 'it',
+            router: router
+        }
+    }), 'http://localhost:3000/it/chi-siamo', 'http://localhost:3000/it/chi-siamo was not the result when calling pathFor with lang = it option');
 
-    test.equal(urlFor('about', {hash: {lang: 'es', router: router}}), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/es/quienes-somos was not the result when calling pathFor with lang = es option');
+    test.equal(urlFor('about', {
+        hash: {
+            lang: 'es',
+            router: router
+        }
+    }), 'http://localhost:3000/es/quienes-somos', 'http://localhost:3000/es/quienes-somos was not the result when calling pathFor with lang = es option');
 
     // origRoute
 
-    test.equal(pathFor('test-i18n', {hash: {origRoute: true, router: router}}), '/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
+    test.equal(pathFor('test-i18n', {
+        hash: {
+            origRoute: true,
+            router: router
+        }
+    }), '/test-i18n', '/test-i18n was not the result when calling pathFor with empty options (default language: en).');
 
-    test.equal(urlFor('test-i18n', {hash: {origRoute: true, router: router}}), 'http://localhost:3000/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
-
+    test.equal(urlFor('test-i18n', {
+        hash: {
+            origRoute: true,
+            router: router
+        }
+    }), 'http://localhost:3000/test-i18n', 'http://localhost:3000/en/test-i18n was not the result when calling pathFor with empty options.');
 
 
 });
-
 
 
 Tinytest.add('i18n-conf - test helpers reactivity', function (test) {
@@ -146,7 +194,6 @@ Tinytest.add('i18n-conf - test helpers reactivity', function (test) {
 });
 
 
-
 Tinytest.add('Router i18n - test i18n template name resolution', function (test) {
 
     var router = initRouter();
@@ -188,4 +235,28 @@ Tinytest.add('Router i18n - test i18n template name resolution', function (test)
 
 
 });
+
+
+Tinytest.add('Router i18n - test i18n template name resolution with exclude', function (test) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    var routeExcluded = router.route('/excluded',
+        {
+            i18n: {
+                exclude: true
+            }
+        });
+
+    var defaultController = routeExcluded.createController({});
+    defaultController.router = router;
+
+    test.equal(defaultController.lookupTemplate(), 'Excluded', 'Template is not "Exclude_template" for default route.');
+
+
+});
+
+
 
