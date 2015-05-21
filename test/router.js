@@ -965,6 +965,65 @@ function testOrigRoute(test, env) {
 
 }
 
+// Edge case where user insert routes with lang prefixes
+function testRouterWithLangPrefix(test, env) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    var testITRouteMatched = false;
+    var testENRouteMatched = false;
+
+    var resetRouter = function () {
+        testRouteITMatched = false;
+        testRouteENMatched = false;
+    };
+
+    router.route('/it/test-i18n',
+        {
+            action: function () {
+                testITRouteMatched = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    router.route('/en/test-i18n',
+        {
+            action: function () {
+                testENRouteMatched = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    var res = {
+        setHeader: function () {
+        },
+        end: function () {
+        }
+    };
+    var next = function () {
+    };
+
+
+    req = {url: '/it/it/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testITRouteMatched, '"/it/test-i18n" route not matched for /it/it/test-i18n');
+    resetRouter();
+
+    req = {url: '/en/en/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testENRouteMatched, '"/en/test-i18n" route not matched for /en/en/test-i18n');
+
+}
+
+
 
 if (Meteor.isClient) {
 
@@ -1021,6 +1080,12 @@ if (Meteor.isClient) {
     Tinytest.add('Router i18n - test origRoute', function (test) {
 
         testOrigRoute(test, 'client');
+
+    });
+
+    Tinytest.add('Router i18n - test router with lang prefix', function (test) {
+
+        testRouterWithLangPrefix(test, 'client');
 
     });
 
@@ -1083,6 +1148,12 @@ if (Meteor.isServer) {
     Tinytest.add('Router i18n - test origRoute', function (test) {
 
         testOrigRoute(test, 'server');
+
+    });
+
+    Tinytest.add('Router i18n - test router with lang prefix', function (test) {
+
+        testRouterWithLangPrefix(test, 'server');
 
     });
 
