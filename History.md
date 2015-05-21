@@ -1,6 +1,12 @@
+## v1.0.2
+
+* Fixed bug on template resolution name for excluded routes (#59)
+* Fixed bug on causing exception when adding routes which already contains lang codes (#58)
+
+
 ## v1.0.1
 
-* Fixed bug on ```Router.go``` causing method to tail on certain conditions (#57)
+* Fixed bug on ```Router.go``` causing method to fail on certain conditions (#57)
 
 
 ## v1.0.0
