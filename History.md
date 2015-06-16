@@ -1,3 +1,8 @@
+## v1.0.3
+
+* Fix bug: I18NConf should be available by default being the Iron Router i18n configuration method (#62)
+
+
 ## v1.0.2
 
 * Fixed bug on template resolution name for excluded routes (#59)
