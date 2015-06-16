@@ -7,5 +7,4 @@
 meteor-platform
 autopublish
 insecure
-martino:iron-router-i18n@0.5.5
-martino:i18n-conf@0.2.0
+martino:iron-router-i18n
