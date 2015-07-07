@@ -259,4 +259,25 @@ Tinytest.add('Router i18n - test i18n template name resolution with exclude', fu
 });
 
 
+Tinytest.add('Router i18n - test getLangCode (client)', function (test) {
+
+    var router = initRouter();
+
+    defaultConf(router);
+
+    window.history.pushState("First getLancCode Test", "First getLancCode Test", "http://localhost:3000/en/test");
+
+    test.equal(router.getLangCode(), 'en', 'Lang code is not "en"');
+
+    window.history.pushState("Second getLancCode Test", "Second getLancCode Test", "/es/test");
+
+    test.equal(router.getLangCode(), 'es', 'Lang code is not "es"');
+
+    window.history.pushState("Second getLancCode Test", "Second getLancCode Test", "/it/test");
+
+    test.equal(router.getLangCode(), 'it', 'Lang code is not "it"');
+
+});
+
+
 

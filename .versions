@@ -22,10 +22,10 @@ iron:router@1.0.7
 iron:url@1.0.7
 jquery@1.11.3_2
 json@1.0.3
-local-test:martino:iron-router-i18n@1.0.2
+local-test:martino:iron-router-i18n@1.0.3
 logging@1.0.7
 martino:i18n-conf@0.3.1
-martino:iron-router-i18n@1.0.2
+martino:iron-router-i18n@1.0.3
 meteor@1.1.6
 minifiers@1.1.5
 minimongo@1.0.8
