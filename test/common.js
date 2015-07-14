@@ -24,11 +24,11 @@ defaultConf = function (router) {
 
     router.configure({
 
-        serverSide: true,
-
         i18n: {
 
-            setLangCode: false
+            setLangCode: false,
+
+            serverSide: true
 
         }
 

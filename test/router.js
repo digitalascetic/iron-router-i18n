@@ -113,7 +113,7 @@ Tinytest.add('Router i18n - test i18n route configuration (legacy)', function (t
 
         });
 
-    test.isFalse(_.isUndefined(router.routes['about']), 'Route name "en.about" was not found.');
+    test.isFalse(_.isUndefined(router.routes['about']), 'Route name "about" was not found.');
     test.equal(router.routes['about'].options.layoutTemplate, 'base_layout', 'Base layout of route "about" is not "base_layout".');
 
     test.isFalse(_.isUndefined(router.routes['about_it']), 'Route "about_it" does not exists.');
@@ -961,40 +961,94 @@ function testOrigRoute(test, env) {
     test.equal(router.routes['post'].path({_id: 23}), "/post/23", 'Original route path not identified as /post/23');
 
 
-
-
 }
 
 // Edge case where user insert routes with lang prefixes
 function testRouterWithLangPrefix(test, env) {
 
+    function testRouterWithLangPrefix(test, env) {
+
+        var router = initRouter();
+
+        defaultConf(router);
+
+        var testITRouteMatched = false;
+        var testENRouteMatched = false;
+
+        var resetRouter = function () {
+            testRouteITMatched = false;
+            testRouteENMatched = false;
+        };
+
+        router.route('/it/test-i18n',
+            {
+                action: function () {
+                    testITRouteMatched = true;
+                },
+
+                where: env
+
+            }
+        );
+
+        router.route('/en/test-i18n',
+            {
+                action: function () {
+                    testENRouteMatched = true;
+                },
+
+                where: env
+
+            }
+        );
+
+        var res = {
+            setHeader: function () {
+            },
+            end: function () {
+            }
+        };
+        var next = function () {
+        };
+
+
+        req = {url: '/it/it/test-i18n'};
+        router(req, res, next);
+        test.isTrue(testITRouteMatched, '"/it/test-i18n" route not matched for /it/it/test-i18n');
+        resetRouter();
+
+        req = {url: '/en/en/test-i18n'};
+        router(req, res, next);
+        test.isTrue(testENRouteMatched, '"/en/test-i18n" route not matched for /en/en/test-i18n');
+
+    }
+
+}
+
+
+// Edge case where user insert routes with lang prefixes
+function testDeferredRoutes(test, env) {
+
     var router = initRouter();
 
     defaultConf(router);
 
-    var testITRouteMatched = false;
-    var testENRouteMatched = false;
+    router.configure({
+        i18n: {
+            deferRouteCreation: true
+        }
+    });
+
+    var testRouteMatched = false;
 
     var resetRouter = function () {
-        testRouteITMatched = false;
-        testRouteENMatched = false;
+        testRouteMatched = false;
     };
 
-    router.route('/it/test-i18n',
+    router.route('test-i18n',
         {
             action: function () {
-                testITRouteMatched = true;
-            },
-
-            where: env
-
-        }
-    );
-
-    router.route('/en/test-i18n',
-        {
-            action: function () {
-                testENRouteMatched = true;
+                testRouteMatched = true;
             },
 
             where: env
@@ -1012,17 +1066,18 @@ function testRouterWithLangPrefix(test, env) {
     };
 
 
-    req = {url: '/it/it/test-i18n'};
+    router._createDeferredRoutes();
+
+    req = {url: '/it/test-i18n'};
     router(req, res, next);
-    test.isTrue(testITRouteMatched, '"/it/test-i18n" route not matched for /it/it/test-i18n');
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /it/test-i18n');
     resetRouter();
 
-    req = {url: '/en/en/test-i18n'};
+    req = {url: '/es/test-i18n'};
     router(req, res, next);
-    test.isTrue(testENRouteMatched, '"/en/test-i18n" route not matched for /en/en/test-i18n');
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /es/test-i18n');
 
 }
-
 
 
 if (Meteor.isClient) {
@@ -1086,6 +1141,12 @@ if (Meteor.isClient) {
     Tinytest.add('Router i18n - test router with lang prefix', function (test) {
 
         testRouterWithLangPrefix(test, 'client');
+
+    });
+
+    Tinytest.add('Router i18n - test deferred routes', function (test) {
+
+        testDeferredRoutes(test, 'client');
 
     });
 
@@ -1154,6 +1215,12 @@ if (Meteor.isServer) {
     Tinytest.add('Router i18n - test router with lang prefix', function (test) {
 
         testRouterWithLangPrefix(test, 'server');
+
+    });
+
+    Tinytest.add('Router i18n - test deferred routes', function (test) {
+
+        testDeferredRoutes(test, 'server');
 
     });
 
