@@ -28,7 +28,9 @@ defaultConf = function (router) {
 
             setLangCode: false,
 
-            serverSide: true
+            serverSide: true,
+
+            deferRouteCreation: false
 
         }
 
