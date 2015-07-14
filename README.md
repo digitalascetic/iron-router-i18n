@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 1.0.3
+**Latest Version:** 1.1.0
 
 Docs for previous 0.5.x versions can be found [here](https://github.com/yoolab/iron-router-i18n/tree/0.5.x). Upgrade to 1.x versions can be done just by switching to [i18n-conf](https://atmospherejs.com/martino/i18n-conf) configuration.
 
@@ -307,6 +307,16 @@ To exclude a single route:
 #### langCodeForDefaultLanguage
 
 Configure whether the language code should be added and considered for default language routes that is if deafault language is 'en' and set to ```false``` the three routes will be ```/about```, ```/es/about``` and ```/it/about``` instead of ```/en/about```, ```/es/about``` and ```/it/about```. Defaults to ```true```.
+
+
+#### deferRouteCreation
+
+Configure whether routes should be instantly created or their creation should be deferred to ```Meteor.startup``` phase. Default (```true```) is to 
+defer route creation to ```Meteor.startup``` phase in order to avoid problems created by Meteor load order logic: if a file with ```Router``` (or ```I18NConf```)
+ configuration is accidentally placed so that is loaded after some route creation (```Router.route```) this can cause unexpected behaviour,
+  be aware about this if you decide to set ```deferRouteCreation``` to false.
+ See [#63](https://github.com/yoolab/iron-router-i18n/issues/63) for details about it.
+
 
 
 ### Methods (Router)

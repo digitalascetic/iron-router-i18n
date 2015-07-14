@@ -1,3 +1,8 @@
+## v1.1.0
+
+* Deferred route creation to ```Meteor.startup``` phase in order to avoid possible problems caused by file load order (#63)
+
+
 ## v1.0.3
 
 * Fix bug: I18NConf should be available by default being the Iron Router i18n configuration method (#62)
