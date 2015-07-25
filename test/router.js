@@ -1027,7 +1027,7 @@ function testRouterWithLangPrefix(test, env) {
 
 
 // Edge case where user insert routes with lang prefixes
-function testDeferredRoutes(test, env) {
+function testRouteRecreationOnConfigure(test, env) {
 
     var router = initRouter();
 
@@ -1035,7 +1035,7 @@ function testDeferredRoutes(test, env) {
 
     router.configure({
         i18n: {
-            deferRouteCreation: true
+            langCodeForDefaultLanguage: true
         }
     });
 
@@ -1065,17 +1065,26 @@ function testDeferredRoutes(test, env) {
     var next = function () {
     };
 
-
-    router._createDeferredRoutes();
-
-    req = {url: '/it/test-i18n'};
+    req = {url: '/en/test-i18n'};
     router(req, res, next);
-    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /it/test-i18n');
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /en/test-i18n  when langCodeForDefaultLanguage is true');
     resetRouter();
 
-    req = {url: '/es/test-i18n'};
+    router.configure({
+        i18n: {
+            langCodeForDefaultLanguage: false
+        }
+    });
+
+    req = {url: '/en/test-i18n'};
     router(req, res, next);
-    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /es/test-i18n');
+    test.isFalse(testRouteMatched, '"test-i18n" route matched for /en/test-i18n  when langCodeForDefaultLanguage is false');
+    resetRouter();
+
+    req = {url: '/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testRouteMatched, '"test-i18n" route not matched for /test-i18n  when langCodeForDefaultLanguage is false');
+    resetRouter();
 
 }
 
@@ -1146,7 +1155,7 @@ if (Meteor.isClient) {
 
     Tinytest.add('Router i18n - test deferred routes', function (test) {
 
-        testDeferredRoutes(test, 'client');
+        testRouteRecreationOnConfigure(test, 'client');
 
     });
 
@@ -1220,7 +1229,7 @@ if (Meteor.isServer) {
 
     Tinytest.add('Router i18n - test deferred routes', function (test) {
 
-        testDeferredRoutes(test, 'server');
+        testRouteRecreationOnConfigure(test, 'server');
 
     });
 
