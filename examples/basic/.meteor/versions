@@ -30,7 +30,8 @@ json@1.0.3
 launch-screen@1.0.2
 livedata@1.0.13
 logging@1.0.7
-martino:iron-router-i18n@0.5.7
+martino:i18n-conf@0.3.1
+martino:iron-router-i18n@1.1.0
 meteor@1.1.6
 meteor-platform@1.2.2
 minifiers@1.1.5

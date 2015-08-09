@@ -1,66 +1,26 @@
-Router.configure({
+I18NConf.configure({
 
-    layoutTemplate: 'layout',
+    languages: ["it", "en", "es"],
 
-    i18n: {
+    defaultLanguage: 'en',
 
-        serverSide: true,
-
-        languages: ["it", "en", "es"],
-
-        defaultLanguage: 'en',
-
-        autoConfLanguage: true,
-
-        _language: null,
-
-        getLanguage: function () {
-            if (this._language) {
-                return this._language;
-            } else {
-                return 'en';
-            }
-        },
-
-        setLanguage: function (lang) {
-            this._language = lang;
-        }
-
-    }
+    autoConfLanguage: true
 
 });
 
-Router.route('/', function () {
-    // render the Home template with a custom data context
-    this.render('Home', {data: {title: 'My Title'}});
-}, { name: "home"});
+Router.configure({
+    layoutTemplate: 'layout'
+})
+
+Router.route('/', {name: 'home'});
 
 // when you navigate to "/one" automatically render the template named "One".
-Router.route('one', {
-
-    path: '/one'
-    /*
-     i18n: {
-
-     languages: {
-
-     it: {
-     template: 'Due'
-     },
-
-     es: {
-     template: 'Dos'
-     }
-
-     }
-     }
-     */
-});
+Router.route('/one', {name: 'one'});
 
 // when you navigate to "/two" automatically render the template named "Two".
-Router.route('two', {
+Router.route('/two', {
 
-    path: '/two',
+    name: 'two',
 
     i18n: {
 
