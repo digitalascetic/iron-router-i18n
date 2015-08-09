@@ -1,6 +1,6 @@
 <template name="layout">
     <head>
-        <title>Iron Router i18n - Basic Sample</title>
+        <title>Iron Router i18n - Tapi18n Example</title>
     </head>
     <body>
     <header>
@@ -8,7 +8,7 @@
             <li><a id="en" href="#">EN</a></li>
             <li><a id="es" href="#">ES</a></li>
             <li><a id="it" href="#">IT</a></li>
-            <li><strong>Current language: </strong>{{ currentLanguage }}</li>
+            <li><strong>{{_ "current_language"}}: </strong>{{ currentLang }}</li>
         </ul>
     </header>
     {{> yield}}
@@ -19,35 +19,31 @@
 <template name="Home">
     {{> Nav}}
 
-    <h1>Home</h1>
-
-    <p>
-        Data Title: {{title}}
-    </p>
+    <h1>{{_ "home"}}</h1>
 </template>
 
 <template name="One">
     {{> Nav}}
 
-    <h1>Page One</h1>
+    <h1>{{_ "page_one"}}</h1>
 </template>
 
 <template name="Two">
     {{> Nav}}
 
-    <h1>Page Two</h1>
+    <h1>{{_ "page_two"}}</h1>
 </template>
 
 <template name="Nav">
     <ul>
         <li>
-            <a href="{{pathFor 'home'}}">Home</a>
+            <a href="{{pathFor 'home'}}">{{_ "home"}}</a>
         </li>
         <li>
-            <a href="{{pathFor 'one'}}">Page One</a>
+            <a href="{{pathFor 'one'}}">{{_ "page_one"}}</a>
         </li>
         <li>
-            <a href="{{pathFor 'two'}}">Page Two</a>
+            <a href="{{pathFor 'two'}}">{{_ "page_two"}}</a>
         </li>
     </ul>
 </template>
