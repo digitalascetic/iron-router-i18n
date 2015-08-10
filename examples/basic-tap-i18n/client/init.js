@@ -39,7 +39,7 @@ Router.route('/two', {
 
 });
 
-I18NConf.onLanguageChange(function(oldLang, newLang) {
+I18NConf.onLanguageChange(function (oldLang, newLang) {
 
     TAPi18n.setLanguage(newLang)
         .done(function () {
@@ -47,7 +47,7 @@ I18NConf.onLanguageChange(function(oldLang, newLang) {
         })
         .fail(function (error_message) {
             // Handle the situation
-            console.log("Failuere trying to change tap-i18n language: " + error_message);
+            console.log("Failure trying to change tap-i18n language: " + error_message);
         });
 
 });
