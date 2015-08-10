@@ -1,3 +1,9 @@
+## v1.1.1
+
+* Fixed bug in deferred route creation loop (#68, thanks @y-ich!)
+* Added basic working examples including one with tap-i18n integration (#65)
+
+
 ## v1.1.0
 
 * Deferred route creation to ```Meteor.startup``` phase in order to avoid possible problems caused by file load order (#63)
