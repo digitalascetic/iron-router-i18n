@@ -1,6 +1,6 @@
 initRouter = function () {
+    I18NConf.reset(true); //Full reset;
     I18NConf.setLanguage('en');
-    I18NConf.reset()
     return new Iron.Router({autoRender: false, autoStart: false});
 
 };
