@@ -5,7 +5,7 @@ Add i18n support for the popular [Iron Router](http://atmospherejs.com/package/i
 
 ## History
 
-**Latest Version:** 1.1.1
+**Latest Version:** 1.2.0
 
 Docs for previous 0.5.x versions can be found [here](https://github.com/yoolab/iron-router-i18n/tree/0.5.x). Upgrade to 1.x versions can be done just by switching to [i18n-conf](https://atmospherejs.com/martino/i18n-conf) configuration.
 
@@ -35,6 +35,8 @@ or use different language aware url schema e.g. `http://example.com/test.it` ins
 * Default strategy to retrieve/set the language (e.g. based on HTTP headers and/or session variable)
 * Server side behaviour, e.g. use a 301 redirect to url with language code when calling a server route.
 * [i18n-conf](https://atmospherejs.com/martino/i18n-conf) based configuration and management.
+* "On the fly" router reconfiguration: i18n routes and router behaviour will be consistently reconfigured on ```I18NConf.configure```
+   and ```Router.configure``` calls implying i18n changes no matter when and where this calls are made (#69).
 * Many other configuration and tweaking options (see docs)
 
 

@@ -1,3 +1,10 @@
+## v1.2.0
+
+* "On the fly" router reconfiguration: i18n routes and router behaviour will be consistently reconfigured on ```I18NConf.configure```
+ and ```Router.configure``` calls implying i18n changes no matter when and where this calls are made (#69).
+
+
+
 ## v1.1.1
 
 * Fixed bug in deferred route creation loop (#68, thanks @y-ich!)
