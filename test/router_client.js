@@ -116,7 +116,7 @@ Tinytest.add('Router i18n - test helpers', function (test) {
 });
 
 
-Tinytest.add('i18n-conf - test helpers reactivity', function (test) {
+Tinytest.add('Router i18n - test helpers reactivity', function (test) {
 
     var router = initRouter();
 
