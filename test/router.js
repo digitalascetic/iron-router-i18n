@@ -966,62 +966,58 @@ function testOrigRoute(test, env) {
 // Edge case where user insert routes with lang prefixes
 function testRouterWithLangPrefix(test, env) {
 
-    function testRouterWithLangPrefix(test, env) {
+    var router = initRouter();
 
-        var router = initRouter();
+    defaultConf(router);
 
-        defaultConf(router);
+    var testITRouteMatched = false;
+    var testENRouteMatched = false;
 
-        var testITRouteMatched = false;
-        var testENRouteMatched = false;
+    var resetRouter = function () {
+        testRouteITMatched = false;
+        testRouteENMatched = false;
+    };
 
-        var resetRouter = function () {
-            testRouteITMatched = false;
-            testRouteENMatched = false;
-        };
-
-        router.route('/it/test-i18n',
-            {
-                action: function () {
-                    testITRouteMatched = true;
-                },
-
-                where: env
-
-            }
-        );
-
-        router.route('/en/test-i18n',
-            {
-                action: function () {
-                    testENRouteMatched = true;
-                },
-
-                where: env
-
-            }
-        );
-
-        var res = {
-            setHeader: function () {
+    router.route('/it/test-i18n',
+        {
+            action: function () {
+                testITRouteMatched = true;
             },
-            end: function () {
-            }
-        };
-        var next = function () {
-        };
+
+            where: env
+
+        }
+    );
+
+    router.route('/en/test-i18n',
+        {
+            action: function () {
+                testENRouteMatched = true;
+            },
+
+            where: env
+
+        }
+    );
+
+    var res = {
+        setHeader: function () {
+        },
+        end: function () {
+        }
+    };
+    var next = function () {
+    };
 
 
-        req = {url: '/it/it/test-i18n'};
-        router(req, res, next);
-        test.isTrue(testITRouteMatched, '"/it/test-i18n" route not matched for /it/it/test-i18n');
-        resetRouter();
+    req = {url: '/it/it/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testITRouteMatched, '"/it/test-i18n" route not matched for /it/it/test-i18n');
+    resetRouter();
 
-        req = {url: '/en/en/test-i18n'};
-        router(req, res, next);
-        test.isTrue(testENRouteMatched, '"/en/test-i18n" route not matched for /en/en/test-i18n');
-
-    }
+    req = {url: '/en/en/test-i18n'};
+    router(req, res, next);
+    test.isTrue(testENRouteMatched, '"/en/test-i18n" route not matched for /en/en/test-i18n');
 
 }
 
@@ -1084,7 +1080,6 @@ function testRouteRecreationOnConfigure(test, env) {
     resetRouter();
 
 
-
     I18NConf.configure({
         languages: ['it', 'es', 'en', 'de']
     });
@@ -1129,7 +1124,6 @@ function testRouteRecreationOnConfigure(test, env) {
     resetRouter();
 
 
-
     router.configure({
         i18n: {
             langCodeForDefaultLanguage: true
@@ -1161,9 +1155,6 @@ function testRouteRecreationOnConfigure(test, env) {
     req = {url: '/de/test-i18n'};
     router(req, res, next);
     test.isFalse(testRouteMatched, '"test-i18n" route matched for /de/test-i18n when languages are just it and en');
-
-
-
 
 
 }
