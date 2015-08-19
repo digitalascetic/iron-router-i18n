@@ -4,7 +4,7 @@ Package.describe({
     summary: 'Iron Router support for i18n',
     git: "https://github.com/yoolab/iron-router-i18n.git",
     name: "martino:iron-router-i18n",
-    version: '1.2.0'
+    version: '1.2.1'
 });
 
 Package.onUse(function (api) {
@@ -17,9 +17,10 @@ Package.onUse(function (api) {
     api.use("iron:router@1.0.0", ['client', 'server']);
 
     // Dependency on i18n-conf, see #46
-    api.use("martino:i18n-conf@0.3.1", ['client', 'server']);
+    // See also #71 for update to 0.3.3 version
+    api.use("martino:i18n-conf@0.3.3", ['client', 'server']);
     // (and #62)
-    api.imply("martino:i18n-conf@0.3.1", ['client', 'server']);
+    api.imply("martino:i18n-conf@0.3.3", ['client', 'server']);
 
     // for helpers
     api.use('blaze', 'client');
@@ -43,7 +44,7 @@ Package.onTest(function (api) {
 
     api.use("iron:router@1.0.1", ['client', 'server']);
 
-    api.use("martino:iron-router-i18n@1.2.0", ['client', 'server']);
+    api.use("martino:iron-router-i18n@1.2.1", ['client', 'server']);
     api.use('tinytest', ['client', 'server']);
     api.use('test-helpers', ['client', 'server']);
 

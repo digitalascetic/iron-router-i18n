@@ -1,3 +1,8 @@
+## v1.2.1
+
+* Updated dependency from martino:i18n-conf to version 0.3.3, fix a bug with language autoconfiguration [#71](https://github.com/yoolab/iron-router-i18n/issues/71).
+
+
 ## v1.2.0
 
 * "On the fly" router reconfiguration: i18n routes and router behaviour will be consistently reconfigured on ```I18NConf.configure```
