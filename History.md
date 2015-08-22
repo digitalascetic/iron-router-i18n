@@ -1,3 +1,9 @@
+## v1.2.2
+
+* ```langCodeAction``` should always call ```I18NConf.setLanguage``` even if language is already persisted [#74](https://github.com/yoolab/iron-router-i18n/issues/74).
+* Fixed a bug causing an error when using ```Route.getRouteForLang``` on an excluded route
+* Cosmetic: removed debug console log on routes recreation [#72](https://github.com/yoolab/iron-router-i18n/issues/72).
+
 ## v1.2.1
 
 * Updated dependency from martino:i18n-conf to version 0.3.3, fix a bug with language autoconfiguration [#71](https://github.com/yoolab/iron-router-i18n/issues/71).
