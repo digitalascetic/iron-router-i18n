@@ -1,0 +1,46 @@
+<template name="layout">
+    <head>
+        <title>Iron Router i18n - Tapi18n Example</title>
+    </head>
+    <body>
+    <header>
+		<div>{{> i18n_dropdown}}</div>
+		<div>{{> i18n_buttons}}</div>
+        <div><strong>{{_ "current_language"}}: </strong>{{ currentLang }}</div>
+    </header>
+    {{> yield}}
+    </body>
+
+</template>
+
+<template name="Home">
+    {{> Nav}}
+
+    <h1>{{_ "home"}}</h1>
+</template>
+
+<template name="One">
+    {{> Nav}}
+
+    <h1>{{_ "page_one"}}</h1>
+</template>
+
+<template name="Two">
+    {{> Nav}}
+
+    <h1>{{_ "page_two"}}</h1>
+</template>
+
+<template name="Nav">
+    <ul>
+        <li>
+            <a href="{{pathFor 'home'}}">{{_ "home"}}</a>
+        </li>
+        <li>
+            <a href="{{pathFor 'one'}}">{{_ "page_one"}}</a>
+        </li>
+        <li>
+            <a href="{{pathFor 'two'}}">{{_ "page_two"}}</a>
+        </li>
+    </ul>
+</template>
