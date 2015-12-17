@@ -1,3 +1,7 @@
+## v1.2.3
+
+* Remove useless warning caused by langCodeAction setting language also when langCode is equal to current language [#75](https://github.com/yoolab/iron-router-i18n/issues/75).
+
 ## v1.2.2
 
 * ```langCodeAction``` should always call ```I18NConf.setLanguage``` even if language is already persisted [#74](https://github.com/yoolab/iron-router-i18n/issues/74).
